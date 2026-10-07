@@ -1,0 +1,6 @@
+{
+  "name": "Dastaan — Museum of Shayari",
+  "description": "An immersive digital museum and reading sanctuary for Urdu and Hindi poetry, curating timeless verses, deep word meanings, ambient mehfil soundscapes, and aesthetic literary collections.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

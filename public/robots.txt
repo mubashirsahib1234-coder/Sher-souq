@@ -1,0 +1,5 @@
+# robots.txt for Dastaan Museum of Shayari
+User-agent: *
+Allow: /
+
+Sitemap: https://ais-pre-44xzqwaswslg5ii5jdmloo-102817314922.asia-southeast1.run.app/sitemap.xml

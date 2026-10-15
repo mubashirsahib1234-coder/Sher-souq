@@ -61,3 +61,16 @@ export interface SubmittedSher {
   timestamp: number;
   approved: boolean;
 }
+
+export interface Book {
+  id: string;
+  title: string;
+  urduTitle: string;
+  poet: string;
+  pricePkr: number;
+  oldPricePkr: number;
+  pages: number;
+  cover: { bg: string; accent: string };
+  blurb: string;
+  sherId: string;
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Mart - Online Kitaabein</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Playfair+Display:wght@400;600&display=swap');
+
+        body { font-family: 'Playfair Display', serif; margin: 0; padding: 0; background-color: #fcf9f2; color: #333; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background-color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: bold; color: #8a1c24; display: flex; align-items: center; gap: 10px; }
+        .order-btn { background-color: #8a1c24; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-family: sans-serif; font-size: 14px; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .section-title { text-align: center; font-size: 28px; margin: 40px 0 10px 0; color: #222; }
+        .section-subtitle { text-align: center; color: #666; margin-bottom: 30px; font-family: sans-serif; font-size: 14px; }
+
+        /* 4 Column Grid Setup */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid-4 { grid-template-columns: 1fr; } }
+
+        /* Books Card */
+        .card { background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); }
+        .card-img { width: 100%; height: 250px; object-fit: cover; background-color: #eee; }
+        .card-content { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 18px; font-weight: bold; margin: 0 0 5px 0; color: #222; }
+        .card-author { font-size: 14px; color: #666; margin: 0 0 15px 0; font-family: sans-serif; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .price { color: #8a1c24; font-weight: bold; font-size: 16px; }
+        .buy-btn { background-color: #8a1c24; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-family: sans-serif; font-size: 13px; border: 1px solid #8a1c24; transition: 0.2s; cursor: pointer; }
+        .buy-btn:hover { background-color: #6b141b; }
+
+        /* Shayari Card */
+        .shayari-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; }
+        .shayari-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 20px; line-height: 2; color: #222; margin-bottom: 10px; direction: rtl; }
+        .shayari-author { font-size: 14px; color: #8a1c24; font-weight: bold; font-family: sans-serif; margin-top: auto; direction: ltr; }
+
+        /* Shayar Card */
+        .shayar-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .shayar-name { font-size: 18px; font-weight: bold; color: #8a1c24; margin: 0 0 5px 0; }
+        .shayar-details { font-size: 12px; color: #777; font-family: sans-serif; margin-bottom: 10px; }
+        .shayar-bio { font-size: 14px; color: #444; font-family: sans-serif; line-height: 1.5; }
+
+        /* Popup Modal for Buying */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 10px; text-align: center; max-width: 400px; width: 90%; }
+        .modal-content h3 { margin-top: 0; color: #8a1c24; font-family: sans-serif;}
+        .modal-content p { font-family: sans-serif; font-size: 15px; color: #444; line-height: 1.6; }
+        .whatsapp-btn { display: inline-block; background-color: #25D366; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-family: sans-serif; font-weight: bold; margin-top: 15px; font-size: 16px; }
+        .close-btn { background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px; cursor: pointer; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">✒️ Poetry Mart</div>
+        <a href="#order" class="order-btn">📦 Order</a>
+    </header>
+
+    <div class="container">
+        
+        <!-- AAJ KA SHER SECTION -->
+        <h2 class="section-title">Aaj Ka Sher</h2>
+        <div id="daily-shayari" style="max-width: 600px; margin: 0 auto 40px auto;">
+            <!-- Sheet se aayega -->
+        </div>
+
+        <!-- KITAABEIN SECTION -->
+        <h2 class="section-title">Kitaabein</h2>
+        <p class="section-subtitle">Urdu shayari ki behtareen kitaabein — Online Parhein</p>
+        <div id="books-grid" class="grid-4">
+            <p style="text-align:center; width:100%;">Data Loading...</p>
+        </div>
+
+        <!-- SHAYAR SECTION -->
+        <h2 class="section-title">Shayar</h2>
+        <p class="section-subtitle">Jin ke alfaaz sadiyon se dilon mein zinda hain</p>
+        <div id="shayari-grid" class="grid-4">
+            <p style="text-align:center; width:100%;">Data Loading...</p>
+        </div>
+
+    </div>
+
+    <!-- WHATSAPP POPUP MODAL (Hidden by default) -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3>Kitab Khareedein</h3>
+            <p>Aap <b><span id="modalBookTitle"></span></b> khareedna chahte hain. PDF download karne ke liye, baraye meharbani WhatsApp par rabta karein aur payment (JazzCash/Easypaisa) mukammal karein.</p>
+            
+            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-btn">💬 WhatsApp par Rabta Karein</a>
+            <br>
+            <button onclick="closeModal()" class="close-btn">Band Karein</button>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================================
+        // AAPKE LINKS YAHAN FIT KAR DIYE GAYE HAIN
+        // =====================================================================
+        
+        // Books ka link
+        const BOOKS_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYGERWmQ2EX6OJBpGtcSXHxkzKogkXejbASkS3zYNx7i-xLxFThtZZYjj55WRCmQfRHzTljwGthlbI/pub?output=csv"; 
+        
+        // Baqi 2 links (Agar aapne alag sheets banayi hain to yahan dalein, warna khali chhor dein)
+        const SHAYARI_SHEET_URL = "PASTE_SHAYARI_CSV_LINK_HERE"; 
+        const SHAYAR_SHEET_URL = "PASTE_SHAYAR_CSV_LINK_HERE";
+
+        // AAPKA WHATSAPP NUMBER (92 laga kar)
+        const MY_WHATSAPP_NUMBER = "923226914318"; 
+
+
+        // -----------------------------------------
+        // 1. BOOKS LOAD KARNE KA CODE
+        // -----------------------------------------
+        async function loadBooks() {
+            if(BOOKS_SHEET_URL === "PASTE_BOOKS_CSV_LINK_HERE" || BOOKS_SHEET_URL === "") return; 
+            try {
+                const response = await fetch(BOOKS_SHEET_URL);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1); 
+                const booksGrid = document.getElementById('books-grid');
+                booksGrid.innerHTML = ''; 
+
+                rows.forEach(row => {
+                    if(row.trim() === '') return; 
+                    // CSV Handle karna (quotes ke sath)
+                    const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || row.split(',');
+                    
+                    const title = columns[0] ? columns[0].replace(/^"|"$/g, '').trim() : '';
+                    const author = columns[1] ? columns[1].replace(/^"|"$/g, '').trim() : '';
+                    const price = columns[2] ? columns[2].replace(/^"|"$/g, '').trim() : '';
+                    const imgUrl = columns[3] ? columns[3].replace(/^"|"$/g, '').trim() : '';
+                    
+                    if(!title) return;
+
+                    const bookHTML = `
+                        <div class="card">
+                            <img src="${imgUrl || 'https://via.placeholder.com/300x400?text=No+Cover'}" alt="${title}" class="card-img">
+                            <div class="card-content">
+                                <h3 class="card-title">${title}</h3>
+                                <p class="card-author">${author}</p>
+                                <div class="price-row">
+                                    <span class="price">Rs. ${price}</span>
+                                    <button class="buy-btn" onclick="openModal('${title}', ${price})">Khareedein</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    booksGrid.innerHTML += bookHTML;
+                });
+            } catch (error) {
+                console.error("Books load nahi ho sakin:", error);
+            }
+        }
+
+        // -----------------------------------------
+        // 2. SHAYARI LOAD KARNE KA CODE
+        // -----------------------------------------
+        async function loadShayari() {
+            if(SHAYARI_SHEET_URL === "PASTE_SHAYARI_CSV_LINK_HERE" || SHAYARI_SHEET_URL === "") return;
+            try {
+                const response = await fetch(SHAYARI_SHEET_URL);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                const shayariGrid = document.getElementById('shayari-grid');
+                shayariGrid.innerHTML = ''; 
+
+                rows.forEach(row => {
+                    if(row.trim() === '') return;
+                    const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || row.split(',');
+                    
+                    const text = columns[0] ? columns[0].replace(/^"|"$/g, '').trim() : '';
+                    const author = columns[1] ? columns[1].replace(/^"|"$/g, '').trim() : '';
+
+                    if(!text) return;
+
+                    const shayariHTML = `
+                        <div class="shayari-card">
+                            <div class="shayari-text">${text}</div>
+                            <div class="shayari-author">— ${author}</div>
+                        </div>
+                    `;
+                    shayariGrid.innerHTML += shayariHTML;
+                });
+            } catch (error) {
+                console.error("Shayari load nahi hui:", error);
+            }
+        }
+
+        // -----------------------------------------
+        // 3. SHAYAR LOAD KARNE KA CODE
+        // -----------------------------------------
+        async function loadShayar() {
+            if(SHAYAR_SHEET_URL === "PASTE_SHAYAR_CSV_LINK_HERE" || SHAYAR_SHEET_URL === "") return;
+            try {
+                const response = await fetch(SHAYAR_SHEET_URL);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                const shayarGrid = document.getElementById('shayari-grid');
+                shayarGrid.innerHTML = ''; 
+
+                rows.forEach(row => {
+                    if(row.trim() === '') return;
+                    const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || row.split(',');
+                    
+                    const name = columns[0] ? columns[0].replace(/^"|"$/g, '').trim() : '';
+                    const years = columns[1] ? columns[1].replace(/^"|"$/g, '').trim() : '';
+                    const location = columns[2] ? columns[2].replace(/^"|"$/g, '').trim() : '';
+                    const bio = columns[3] ? columns[3].replace(/^"|"$/g, '').trim() : '';
+
+                    if(!name) return;
+
+                    const shayarHTML = `
+                        <div class="shayar-card">
+                            <h3 class="shayar-name">${name}</h3>
+                            <div class="shayar-details">${years} • ${location}</div>
+                            <div class="shayar-bio">${bio}</div>
+                        </div>
+                    `;
+                    shayarGrid.innerHTML += shayarHTML;
+                });
+            } catch (error) {
+                console.error("Shayar load nahi hue:", error);
+            }
+        }
+
+        // -----------------------------------------
+        // MODAL (Popup) FUNCTIONS
+        // -----------------------------------------
+        function openModal(bookTitle, price) {
+            document.getElementById('modalBookTitle').innerText = bookTitle;
+            
+            // WhatsApp message tayar karna
+            const message = `Assalam o Alaikum, mujhe "${bookTitle}" (Rs. ${price}) khareedni hai. PDF bhej dein.`;
+            const waLink = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            document.getElementById('whatsappLink').href = waLink;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        window.onload = () => {
+            loadBooks(); 
+            // loadShayari(); // Jab baqi links dalein tab inke aage se // hata dein
+            // loadShayar();
+        };
+    </script>
+</body>
+</html>

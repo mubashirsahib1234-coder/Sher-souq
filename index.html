@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Mart - Sher, Kitaabein & Products</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #8a1c24;
+            --primary-hover: #6b141b;
+            --bg-color: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --card-bg: #ffffff;
+            --instagram: #E1306C;
+        }
+
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-dark); scroll-behavior: smooth; }
+        
+        /* HEADER */
+        header { display: flex; flex-direction: column; background-color: var(--card-bg); box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1200px; margin: 0 auto; padding: 15px 0; }
+        .logo { font-size: 26px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .order-btn { background-color: var(--primary); color: white; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-size: 14px; font-weight: 600; transition: 0.3s; }
+        .order-btn:hover { background-color: var(--primary-hover); }
+        
+        /* TABS */
+        nav { display: flex; gap: 10px; width: 90%; max-width: 1200px; margin: 0 auto; justify-content: center; border-top: 1px solid #eee; padding: 12px 0; overflow-x: auto; }
+        nav a { text-decoration: none; color: var(--text-light); font-size: 15px; font-weight: 600; padding: 8px 20px; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: 0.3s; background: #f1f2f6; }
+        nav a:hover, nav a.active { color: white; background-color: var(--primary); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .section-title { text-align: center; font-size: 32px; margin: 40px 0 10px 0; color: var(--text-dark); font-weight: 600; }
+        .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 40px; font-size: 15px; }
+
+        /* GRID SETUP */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        @media (max-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+
+        /* CARDS */
+        .main-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); overflow: hidden; display: flex; flex-direction: column; border: 1px solid #f0f0f0; transition: transform 0.3s; }
+        .main-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        
+        /* VIDEO BUTTON */
+        .video-btn-container { padding: 12px 12px 0 12px; }
+        .video-btn { display: block; text-align: center; background-color: var(--instagram); color: white; text-decoration: none; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; width: 100%;}
+        .video-btn:hover { background-color: #C13584; }
+
+        /* SHER PART */
+        .sher-part { padding: 20px 15px; text-align: center; border-bottom: 1px solid #f0f0f0; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .sher-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 17px; line-height: 2.2; color: #1a1a1a; margin: 0 0 15px 0; }
+        .sher-author { font-size: 13px; color: var(--primary); font-weight: 600; margin: 0 0 15px 0; }
+        
+        .extra-links { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; }
+        .extra-links span { color: #3498db; cursor: pointer; padding: 5px; }
+        .extra-links span:hover { text-decoration: underline; }
+
+        /* BOOK PART */
+        .book-part { padding: 15px; display: flex; gap: 15px; background: #fafafa; align-items: center; }
+        .book-img { width: 65px; height: 95px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .book-details { display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; }
+        .book-title { font-size: 15px; font-weight: 600; margin: 0 0 5px 0; color: var(--text-dark); }
+        .book-price { font-size: 15px; color: var(--primary); font-weight: 600; margin: 0; }
+        .buy-btn { background-color: var(--primary); color: white; padding: 8px 10px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; text-align: center; margin-top: 10px; transition: 0.3s;}
+        .buy-btn:hover { background-color: var(--primary-hover); }
+
+        /* PRODUCT CARD (For Affiliate) */
+        .product-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); overflow: hidden; border: 1px solid #f0f0f0; text-align: center; padding: 25px 15px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .product-name { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: var(--text-dark); }
+        .affiliate-btn { background-color: #f39c12; color: white; padding: 10px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .affiliate-btn:hover { background-color: #d68910; }
+
+        /* POPUPS (MODALS) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 500px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 22px; }
+        .modal-content p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+        .modal-sher-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 20px; line-height: 2.2; text-align: center; margin: 20px 0; color: var(--text-dark);}
+        
+        .whatsapp-btn { display: inline-block; background-color: #25D366; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 20px; font-size: 16px; }
+        .close-btn { background: #ecf0f1; color: #333; border: none; padding: 10px 20px; border-radius: 8px; margin-top: 20px; cursor: pointer; font-weight: 600; width: 100%; transition: 0.3s;}
+        .close-btn:hover { background: #bdc3c7; }
+        
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 20px; background: #000; border-radius: 8px;}
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
+
+        .tab-section { display: none; animation: fadeIn 0.4s; }
+        .tab-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div class="logo">✒️ Poetry Mart</div>
+            <a href="#" class="order-btn">📦 Order</a>
+        </div>
+        <nav>
+            <a class="active" onclick="showTab('tab-asthaar', this)">Ashaar & Books</a>
+            <a onclick="showTab('tab-products', this)">Products</a>
+            <a onclick="showTab('tab-shayar', this)">Shayar</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <!-- SECTION 1: ASHAAR & BOOKS -->
+        <div id="tab-asthaar" class="tab-section active">
+            <h2 class="section-title">Ashaar & Kitaabein</h2>
+            <p class="section-subtitle">Sher padhein, Shayar ki khidmat dekhein aur kitabein online lein</p>
+            <div id="main-grid" class="grid">
+                <p style="text-align:center; width:100%;">Data Loading...</p>
+            </div>
+        </div>
+
+        <!-- SECTION 2: AFFILIATE PRODUCTS -->
+        <div id="tab-products" class="tab-section">
+            <h2 class="section-title">Recommended Products</h2>
+            <p class="section-subtitle">Hamari pasand ki behtareen cheezein (Affiliate)</p>
+            <div id="products-grid" class="grid">
+                <p style="text-align:center; width:100%;">Data Loading...</p>
+            </div>
+        </div>
+
+        <!-- SECTION 3: SHAYAR -->
+        <div id="tab-shayar" class="tab-section">
+            <h2 class="section-title">Shayar</h2>
+            <p class="section-subtitle">Jin ke alfaaz sadiyon se dilon mein zinda hain</p>
+            <div id="shayar-grid" class="grid">
+                <p style="text-align:center; width:100%;">Data Loading...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODALS -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3>Kitab Khareedein</h3>
+            <p>Aap <b><span id="modalBookTitle"></span></b> khareedna chahte hain. PDF lene ke liye WhatsApp par rabta karein.</p>
+            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-btn">💬 WhatsApp par Rabta Karein</a>
+            <br><button onclick="closeModal('paymentModal')" class="close-btn">Band Karein</button>
+        </div>
+    </div>
+
+    <div id="storyModal" class="modal">
+        <div class="modal-content">
+            <h3>Puri Shayari / Story</h3>
+            <div id="modalStoryText" class="modal-sher-text"></div>
+            <button onclick="closeModal('storyModal')" class="close-btn">Band Karein</button>
+        </div>
+    </div>
+
+    <div id="bioModal" class="modal">
+        <div class="modal-content">
+            <h3>Shayar ki Khidmat</h3>
+            <p><b><span id="modalShayarName"></span></b></p>
+            <p id="modalShayarBio" style="text-align: justify;"></p>
+            <button onclick="closeModal('bioModal')" class="close-btn">Band Karein</button>
+        </div>
+    </div>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <h3>Video / Reel</h3>
+            <div class="video-container" id="videoContainer"></div>
+            <button onclick="closeVideoModal()" class="close-btn">Band Karein</button>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ YAHAN APNI GOOGLE SHEET KA CSV LINK PASTE KAREIN ⚠️
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYGERWmQ2EX6OJBpGtcSXHxkzKogkXejbASkS3zYNx7i-xLxFThtZZYjj55WRCmQfRHzTljwGthlbI/pub?output=csv"; 
+        const MY_WHATSAPP_NUMBER = "923226914318"; 
+
+        let siteData = [];
+
+        async function loadData() {
+            if(SHEET_URL === "") return; 
+            try {
+                const response = await fetch(SHEET_URL);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1); 
+                siteData = []; 
+
+                rows.forEach(row => {
+                    if(row.trim() === '') return; 
+                    const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || row.split(',');
+                    
+                    const item = {
+                        title: columns[0] ? columns[0].replace(/^"|"$/g, '').trim() : '',
+                        author: columns[1] ? columns[1].replace(/^"|"$/g, '').trim() : '',
+                        price: columns[2] ? columns[2].replace(/^"|"$/g, '').trim() : '',
+                        img: columns[3] ? columns[3].replace(/^"|"$/g, '').trim() : '',
+                        sherText: columns[4] ? columns[4].replace(/^"|"$/g, '').trim() : '',
+                        sherAuthor: columns[5] ? columns[5].replace(/^"|"$/g, '').trim() : '',
+                        fullStory: columns[6] ? columns[6].replace(/^"|"$/g, '').trim() : '',
+                        bio: columns[7] ? columns[7].replace(/^"|"$/g, '').trim() : '',
+                        videoLink: columns[8] ? columns[8].replace(/^"|"$/g, '').trim() : '',
+                        prodName: columns[9] ? columns[9].replace(/^"|"$/g, '').trim() : '', // Column J
+                        prodLink: columns[10] ? columns[10].replace(/^"|"$/g, '').trim() : '' // Column K
+                    };
+                    if(item.title || item.sherText) siteData.push(item);
+                });
+
+                renderCards();
+                renderProducts();
+                renderShayarSection();
+                
+            } catch (error) {
+                console.error("Data load nahi ho saka:", error);
+            }
+        }
+
+        function renderCards() {
+            const mainGrid = document.getElementById('main-grid');
+            mainGrid.innerHTML = ''; 
+            siteData.forEach((item, index) => {
+                if(!item.title && !item.sherText) return; // Skip if no book data
+                
+                const videoBtnHTML = item.videoLink ? 
+                    `<div class="video-btn-container"><button onclick="openVideo('${item.videoLink}')" class="video-btn">🎥 Video/Story Dekhein</button></div>` : '';
+
+                const cardHTML = `
+                    <div class="main-card">
+                        ${videoBtnHTML}
+                        <div class="sher-part">
+                            <div class="sher-text">${item.sherText || 'Sher yahan aayega...'}</div>
+                            <div class="sher-author">— ${item.sherAuthor || 'Author'}</div>
+                            <div class="extra-links">
+                                ${item.fullStory ? `<span onclick="openStory(${index})">Puri Shayari</span>` : `<span style="color:#ccc;">Story N/A</span>`}
+                                ${item.bio ? `<span onclick="openBio(${index})">Shayar ki Khidmat</span>` : `<span style="color:#ccc;">Bio N/A</span>`}
+                            </div>
+                        </div>
+                        <div class="book-part">
+                            <img src="${item.img || 'https://via.placeholder.com/150x200?text=Book'}" class="book-img">
+                            <div class="book-details">
+                                <div>
+                                    <h3 class="book-title">${item.title}</h3>
+                                    <p class="book-price">Rs. ${item.price}</p>
+                                </div>
+                                <button class="buy-btn" onclick="openModal('${item.title}', ${item.price})">Khareedein</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                mainGrid.innerHTML += cardHTML;
+            });
+        }
+
+        function renderProducts() {
+            const productsGrid = document.getElementById('products-grid');
+            productsGrid.innerHTML = ''; 
+            let hasProducts = false;
+
+            siteData.forEach(item => {
+                if(item.prodName && item.prodLink) {
+                    hasProducts = true;
+                    const prodHTML = `
+                        <div class="product-card">
+                            <h3 class="product-name">${item.prodName}</h3>
+                            <a href="${item.prodLink}" target="_blank" class="affiliate-btn">Buy Now</a>
+                        </div>
+                    `;
+                    productsGrid.innerHTML += prodHTML;
+                }
+            });
+
+            if(!hasProducts) {
+                productsGrid.innerHTML = `<p style="text-align:center; width:100%; color:#777;">Faisla jald aayega...</p>`;
+            }
+        }
+
+        function renderShayarSection() {
+            const shayarGrid = document.getElementById('shayar-grid');
+            shayarGrid.innerHTML = ''; 
+            let displayedAuthors = new Set();
+
+            siteData.forEach(item => {
+                if(item.author && !displayedAuthors.has(item.author) && item.bio) {
+                    displayedAuthors.add(item.author);
+                    const shayarHTML = `
+                        <div class="main-card" style="padding: 25px; text-align: center;">
+                            <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 20px;">${item.author}</h3>
+                            <p style="font-size: 14px; color: var(--text-light); text-align: justify; line-height: 1.6;">${item.bio}</p>
+                        </div>
+                    `;
+                    shayarGrid.innerHTML += shayarHTML;
+                }
+            });
+        }
+
+        // --- INTERACTIVE FUNCTIONS ---
+        function showTab(tabId, element) {
+            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight tab
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function openModal(bookTitle, price) {
+            document.getElementById('modalBookTitle').innerText = bookTitle;
+            const message = `Assalam o Alaikum, mujhe "${bookTitle}" (Rs. ${price}) khareedni hai. PDF bhej dein.`;
+            document.getElementById('whatsappLink').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function openStory(index) {
+            document.getElementById('modalStoryText').innerText = siteData[index].fullStory;
+            document.getElementById('storyModal').style.display = 'flex';
+        }
+
+        function openBio(index) {
+            document.getElementById('modalShayarName').innerText = siteData[index].author;
+            document.getElementById('modalShayarBio').innerText = siteData[index].bio;
+            document.getElementById('bioModal').style.display = 'flex';
+        }
+
+        function openVideo(url) {
+            const container = document.getElementById('videoContainer');
+            let embedUrl = url;
+
+            if(url.includes("instagram.com")) {
+                let cleanUrl = url.split('?')[0];
+                if(!cleanUrl.endsWith('/')) cleanUrl += '/';
+                embedUrl = cleanUrl + "embed";
+                container.innerHTML = `<iframe src="${embedUrl}" allowtransparency="true" allowfullscreen="true" scrolling="no" style="width:100%; height:100%; border:none; overflow:hidden;"></iframe>`;
+            } 
+            else if(url.includes("youtube.com") || url.includes("youtu.be")) {
+                let videoId = "";
+                if(url.includes("v=")) videoId = url.split("v=")[1].split("&")[0];
+                else if(url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1].split("?")[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                container.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+            } 
+            else {
+                container.innerHTML = `<div style="padding:40px; color:white; text-align:center;">Naye tab mein khul raha hai...<br><br><a href="${url}" target="_blank" style="color:#E1306C; font-weight:bold; text-decoration:underline;">Click Here</a></div>`;
+                window.open(url, '_blank');
+            }
+            document.getElementById('videoModal').style.display = 'flex';
+        }
+
+        function closeVideoModal() {
+            document.getElementById('videoContainer').innerHTML = ''; 
+            document.getElementById('videoModal').style.display = 'none';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onload = () => { loadData(); };
+    </script>
+</body>
+</html>

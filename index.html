@@ -28,7 +28,7 @@
         .lang-toggle button { background: #eee; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .lang-toggle button.active { background: var(--primary); color: white; }
         
-        /* TABS (Tarteeb: 1. Ashaar, 2. Products, 3. Shayar) */
+        /* TABS (Tarteeb: 1. poetry, 2. Products, 3. Shayar) */
         nav { display: flex; gap: 10px; width: 90%; max-width: 1200px; margin: 0 auto; justify-content: center; border-top: 1px solid #eee; padding: 12px 0; overflow-x: auto; }
         nav a { text-decoration: none; color: var(--text-light); font-size: 15px; font-weight: 600; padding: 8px 20px; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: 0.3s; background: #f1f2f6; }
         nav a:hover, nav a.active { color: white; background-color: var(--primary); }
@@ -112,16 +112,16 @@
             </div>
         </div>
         <nav>
-            <!-- Tarteeb yahan bilkul theek hai: 1. Ashaar, 2. Products, 3. Shayar -->
-            <a class="active" onclick="showTab('tab-asthaar', this)" id="nav-1">Ashaar & Books</a>
+            <!-- Tarteeb yahan bilkul theek hai: 1. poetry, 2. Products, 3. Shayar -->
+            <a class="active" onclick="showTab('tab-asthaar', this)" id="nav-1">poetry & Books</a>
             <a onclick="showTab('tab-products', this)" id="nav-2">Products</a>
             <a onclick="showTab('tab-shayar', this)" id="nav-3">Shayar</a>
         </nav>
     </header>
 
     <div class="container">
-        <!-- SECTION 1: ASHAAR & BOOKS -->
-        <div id="tab-asthaar" class="tab-section active">
+        <!-- SECTION 1: poerty & BOOKS -->
+        <div id="tab-poetry" class="tab-section active">
             <h2 class="section-title" id="title-1">Ashaar & Kitaabein</h2>
             <p class="section-subtitle" id="subtitle-1">Sher padhein, aur kitaabein online lein</p>
             <div id="main-grid" class="grid">

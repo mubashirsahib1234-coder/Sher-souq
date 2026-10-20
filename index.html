@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetry Mart - Sher, Kitaabein & Products</title>
+    <title>Poetry Mart</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Poppins:wght@300;400;600&display=swap');
 
@@ -28,7 +28,7 @@
         .lang-toggle button { background: #eee; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .lang-toggle button.active { background: var(--primary); color: white; }
         
-        /* TABS */
+        /* TABS (Tarteeb: 1. Ashaar, 2. Products, 3. Shayar) */
         nav { display: flex; gap: 10px; width: 90%; max-width: 1200px; margin: 0 auto; justify-content: center; border-top: 1px solid #eee; padding: 12px 0; overflow-x: auto; }
         nav a { text-decoration: none; color: var(--text-light); font-size: 15px; font-weight: 600; padding: 8px 20px; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: 0.3s; background: #f1f2f6; }
         nav a:hover, nav a.active { color: white; background-color: var(--primary); }
@@ -54,10 +54,11 @@
 
         /* SHER PART (Khuli Shayari) */
         .sher-part { padding: 20px 15px; text-align: center; border-bottom: 1px solid #f0f0f0; flex-grow: 1; display: flex; flex-direction: column; }
-        .sher-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 17px; line-height: 2.2; color: #1a1a1a; margin: 0 0 10px 0; }
+        .sher-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 18px; line-height: 2.2; color: #1a1a1a; margin: 0 0 10px 0; }
         .sher-author { font-size: 14px; color: var(--primary); font-weight: 600; margin: 0 0 15px 0; }
         
-        .full-story-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 15px; line-height: 2; color: #444; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: center; }
+        /* FULL STORY (Ab bilkul khuli hui) */
+        .full-story-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 16px; line-height: 2.2; color: #333; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: center; }
 
         /* BOOK PART (Bara Size) */
         .book-part { padding: 15px; display: flex; gap: 15px; background: #fafafa; align-items: center; }
@@ -111,6 +112,7 @@
             </div>
         </div>
         <nav>
+            <!-- Tarteeb yahan bilkul theek hai: 1. Ashaar, 2. Products, 3. Shayar -->
             <a class="active" onclick="showTab('tab-asthaar', this)" id="nav-1">Ashaar & Books</a>
             <a onclick="showTab('tab-products', this)" id="nav-2">Products</a>
             <a onclick="showTab('tab-shayar', this)" id="nav-3">Shayar</a>
@@ -165,12 +167,11 @@
     </div>
 
     <script>
-        // Aapka Google Sheet URL yahan fit hai
+        // AAPKA GOOGLE SHEET URL YAHAN FIT HAI
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/1pJaSN2ToSzTR0ILhg3aIvoqW6rDRETBqUbretY0DT0k/export?format=csv"; 
         const MY_WHATSAPP_NUMBER = "923226914318"; 
         let siteData = [];
 
-        // LANGUAGE TRANSLATIONS
         const langData = {
             ur: { nav: ["اشعار و کتابیں", "مصنوعات", "شاعر"], t1: "اشعار و کتابیں", s1: "شعر پڑھیں اور کتابیں آن لائن لیں", t2: "تجویز کردہ مصنوعات", s2: "ہماری پسند کی بہترین چیزیں", t3: "شاعر", s3: "جن کے الفاظ صدیوں سے دلوں میں زندہ ہیں", buy: "خریدیں", wa: "واٹس ایپ پر رابطہ کریں", close: "بند کریں" },
             hi: { nav: ["शायरी और किताबें", "उत्पाद", "शायर"], t1: "शायरी और किताबें", s1: "शायरी पढ़ें और किताबें ऑनलाइन लें", t2: "अनुशंसित उत्पाद", s2: "हमारी पसंद की बेहतरीन चीजें", t3: "शायर", s3: "जिनके शब्द सदियों से दिलों में जिंदा हैं", buy: "खरीदें", wa: "व्हाट्सएप पर संपर्क करें", close: "बंद करें" },
@@ -228,7 +229,7 @@
                 renderCards();
                 renderProducts();
                 renderShayarSection();
-                changeLang('ur'); // Default language
+                changeLang('ur'); 
                 
             } catch (error) { console.error("Error:", error); }
         }
@@ -242,7 +243,6 @@
                 const videoBtnHTML = item.videoLink ? 
                     `<div class="video-btn-container"><button onclick="openVideo('${item.videoLink}')" class="video-btn">🎥 Video/Reel Dekhein</button></div>` : '';
 
-                // Full Story ab seedha nazar aayegi
                 const storyHTML = item.fullStory ? 
                     `<div class="full-story-text">${item.fullStory}</div>` : '';
 
@@ -309,7 +309,6 @@
             });
         }
 
-        // --- FUNCTIONS ---
         function showTab(tabId, element) {
             document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');

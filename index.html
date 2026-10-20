@@ -123,7 +123,7 @@
         <!-- SECTION 2: AFFILIATE PRODUCTS -->
         <div id="tab-products" class="tab-section">
             <h2 class="section-title">Recommended Products</h2>
-            <p class="section-subtitle">Hamari pasand ki behtareen cheezein (Affiliate)</p>
+            <p class="section-subtitle">Hamari pasand ki behtareen cheezein</p>
             <div id="products-grid" class="grid">
                 <p style="text-align:center; width:100%;">Data Loading...</p>
             </div>
@@ -176,8 +176,9 @@
     </div>
 
     <script>
-        // ⚠️ YAHAN APNI GOOGLE SHEET KA CSV LINK PASTE KAREIN ⚠️
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQYGERWmQ2EX6OJBpGtcSXHxkzKogkXejbASkS3zYNx7i-xLxFThtZZYjj55WRCmQfRHzTljwGthlbI/pub?output=csv"; 
+        // ⚠️ YAHAN AAPKI GOOGLE SHEET KA CSV LINK LAGA HUA HAI ⚠️
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/1pJaSN2ToSzTR0ILhg3aIvoqW6rDRETBqUbretY0DT0k/export?format=csv"; 
+        
         const MY_WHATSAPP_NUMBER = "923226914318"; 
 
         let siteData = [];
@@ -204,8 +205,8 @@
                         fullStory: columns[6] ? columns[6].replace(/^"|"$/g, '').trim() : '',
                         bio: columns[7] ? columns[7].replace(/^"|"$/g, '').trim() : '',
                         videoLink: columns[8] ? columns[8].replace(/^"|"$/g, '').trim() : '',
-                        prodName: columns[9] ? columns[9].replace(/^"|"$/g, '').trim() : '', // Column J
-                        prodLink: columns[10] ? columns[10].replace(/^"|"$/g, '').trim() : '' // Column K
+                        prodName: columns[9] ? columns[9].replace(/^"|"$/g, '').trim() : '',
+                        prodLink: columns[10] ? columns[10].replace(/^"|"$/g, '').trim() : ''
                     };
                     if(item.title || item.sherText) siteData.push(item);
                 });
@@ -223,7 +224,7 @@
             const mainGrid = document.getElementById('main-grid');
             mainGrid.innerHTML = ''; 
             siteData.forEach((item, index) => {
-                if(!item.title && !item.sherText) return; // Skip if no book data
+                if(!item.title && !item.sherText) return; 
                 
                 const videoBtnHTML = item.videoLink ? 
                     `<div class="video-btn-container"><button onclick="openVideo('${item.videoLink}')" class="video-btn">🎥 Video/Story Dekhein</button></div>` : '';
@@ -274,7 +275,7 @@
             });
 
             if(!hasProducts) {
-                productsGrid.innerHTML = `<p style="text-align:center; width:100%; color:#777;">Faisla jald aayega...</p>`;
+                productsGrid.innerHTML = `<p style="text-align:center; width:100%; color:#777;">Products jald aa rahe hain...</p>`;
             }
         }
 
@@ -302,7 +303,6 @@
             document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             
-            // Highlight tab
             document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
             element.classList.add('active');
         }

@@ -28,7 +28,7 @@
         .lang-toggle button { background: #eee; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .lang-toggle button.active { background: var(--primary); color: white; }
         
-        /* TABS (Tarteeb: 1. poetry, 2. Products, 3. Shayar) */
+        /* TABS */
         nav { display: flex; gap: 10px; width: 90%; max-width: 1200px; margin: 0 auto; justify-content: center; border-top: 1px solid #eee; padding: 12px 0; overflow-x: auto; }
         nav a { text-decoration: none; color: var(--text-light); font-size: 15px; font-weight: 600; padding: 8px 20px; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: 0.3s; background: #f1f2f6; }
         nav a:hover, nav a.active { color: white; background-color: var(--primary); }
@@ -52,21 +52,20 @@
         .video-btn { display: block; text-align: center; background-color: var(--instagram); color: white; text-decoration: none; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; width: 100%;}
         .video-btn:hover { background-color: #C13584; }
 
-        /* SHER PART (Khuli Shayari) */
+        /* SHER PART */
         .sher-part { padding: 20px 15px; text-align: center; border-bottom: 1px solid #f0f0f0; flex-grow: 1; display: flex; flex-direction: column; }
         .sher-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 18px; line-height: 2.2; color: #1a1a1a; margin: 0 0 10px 0; }
         .sher-author { font-size: 14px; color: var(--primary); font-weight: 600; margin: 0 0 15px 0; }
         
-        /* FULL STORY (Ab bilkul khuli hui) */
         .full-story-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 16px; line-height: 2.2; color: #333; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: center; }
 
-        /* BOOK PART (Bara Size) */
+        /* BOOK PART */
         .book-part { padding: 15px; display: flex; gap: 15px; background: #fafafa; align-items: center; }
         .book-img { width: 85px; height: 125px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
         .book-details { display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; height: 100%; }
         .book-title { font-size: 16px; font-weight: 600; margin: 0 0 5px 0; color: var(--text-dark); }
         .book-price { font-size: 16px; color: var(--primary); font-weight: 600; margin: 0; }
-        .buy-btn { background-color: var(--primary); color: white; padding: 10px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; text-align: center; margin-top: 10px; transition: 0.3s;}
+        .buy-btn { background-color: var(--primary); color: white; padding: 10px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; text-align: center; margin-top: 10px; transition: 0.3s;}
         .buy-btn:hover { background-color: var(--primary-hover); }
 
         /* PRODUCT CARD */
@@ -94,9 +93,9 @@
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 20px; background: #000; border-radius: 8px;}
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
 
-        .tab-section { display: none; animation: fadeIn 0.4s; }
+        /* TAB CONTENT */
+        .tab-section { display: none; }
         .tab-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
@@ -112,24 +111,24 @@
             </div>
         </div>
         <nav>
-            <!-- Tarteeb yahan bilkul theek hai: 1. poetry, 2. Products, 3. Shayar -->
-            <a class="active" onclick="showTab('tab-asthaar', this)" id="nav-1">poetry & Books</a>
+            <!-- Yahan pehle number par Poetry & Books hai -->
+            <a class="active" onclick="showTab('tab-asthaar', this)" id="nav-1">Poetry & Books</a>
             <a onclick="showTab('tab-products', this)" id="nav-2">Products</a>
             <a onclick="showTab('tab-shayar', this)" id="nav-3">Shayar</a>
         </nav>
     </header>
 
     <div class="container">
-        <!-- SECTION 1: poerty & BOOKS -->
-        <div id="tab-poetry" class="tab-section active">
-            <h2 class="section-title" id="title-1">Ashaar & Kitaabein</h2>
+        <!-- SECTION 1: POETRY & BOOKS -->
+        <div id="tab-asthaar" class="tab-section active">
+            <h2 class="section-title" id="title-1">Poetry & Books</h2>
             <p class="section-subtitle" id="subtitle-1">Sher padhein, aur kitaabein online lein</p>
             <div id="main-grid" class="grid">
                 <p style="text-align:center; width:100%;">Data Loading...</p>
             </div>
         </div>
 
-        <!-- SECTION 2: AFFILIATE PRODUCTS -->
+        <!-- SECTION 2: PRODUCTS -->
         <div id="tab-products" class="tab-section">
             <h2 class="section-title" id="title-2">Recommended Products</h2>
             <p class="section-subtitle" id="subtitle-2">Hamari pasand ki behtareen cheezein</p>
@@ -151,7 +150,7 @@
     <!-- MODALS -->
     <div id="paymentModal" class="modal">
         <div class="modal-content">
-            <h3 id="modal-buy-title">Kitab Khareedein</h3>
+            <h3 id="modal-buy-title">Order Now</h3>
             <p id="modal-buy-desc">Aap yeh kitab khareedna chahte hain. PDF lene ke liye WhatsApp par rabta karein.</p>
             <a href="#" id="whatsappLink" target="_blank" class="whatsapp-btn" id="modal-buy-btn">💬 WhatsApp par Rabta Karein</a>
             <br><button onclick="closeModal('paymentModal')" class="close-btn">Band Karein</button>
@@ -167,15 +166,15 @@
     </div>
 
     <script>
-        // AAPKA GOOGLE SHEET URL YAHAN FIT HAI
+        // AAPKI GOOGLE SHEET KA LINK
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/1pJaSN2ToSzTR0ILhg3aIvoqW6rDRETBqUbretY0DT0k/export?format=csv"; 
         const MY_WHATSAPP_NUMBER = "923226914318"; 
         let siteData = [];
 
         const langData = {
-            ur: { nav: ["اشعار و کتابیں", "مصنوعات", "شاعر"], t1: "اشعار و کتابیں", s1: "شعر پڑھیں اور کتابیں آن لائن لیں", t2: "تجویز کردہ مصنوعات", s2: "ہماری پسند کی بہترین چیزیں", t3: "شاعر", s3: "جن کے الفاظ صدیوں سے دلوں میں زندہ ہیں", buy: "خریدیں", wa: "واٹس ایپ پر رابطہ کریں", close: "بند کریں" },
-            hi: { nav: ["शायरी और किताबें", "उत्पाद", "शायर"], t1: "शायरी और किताबें", s1: "शायरी पढ़ें और किताबें ऑनलाइन लें", t2: "अनुशंसित उत्पाद", s2: "हमारी पसंद की बेहतरीन चीजें", t3: "शायर", s3: "जिनके शब्द सदियों से दिलों में जिंदा हैं", buy: "खरीदें", wa: "व्हाट्सएप पर संपर्क करें", close: "बंद करें" },
-            en: { nav: ["Ashaar & Books", "Products", "Shayar"], t1: "Ashaar & Books", s1: "Read poetry and get books online", t2: "Recommended Products", s2: "Our favorite picks", t3: "Shayar", s3: "Whose words live in hearts for centuries", buy: "Buy Now", wa: "Contact on WhatsApp", close: "Close" }
+            ur: { nav: ["شاعری اور کتابیں", "مصنوعات", "شاعر"], t1: "شاعری اور کتابیں", s1: "شعر پڑھیں اور کتابیں آن لائن لیں", t2: "تجویز کردہ مصنوعات", s2: "ہماری پسند کی بہترین چیزیں", t3: "شاعر", s3: "جن کے الفاظ صدیوں سے دلوں میں زندہ ہیں", buy: "ابھی آرڈر کریں", wa: "واٹس ایپ پر رابطہ کریں", close: "بند کریں" },
+            hi: { nav: ["कविता और किताबें", "उत्पाद", "शायर"], t1: "कविता और किताबें", s1: "शायरी पढ़ें और किताबें ऑनलाइन लें", t2: "अनुशंसित उत्पाद", s2: "हमारी पसंद की बेहतरीन चीजें", t3: "शायर", s3: "जिनके शब्द सदियों से दिलों में जिंदा हैं", buy: "अभी ऑर्डर करें", wa: "व्हाट्सएप पर संपर्क करें", close: "बंद करें" },
+            en: { nav: ["Poetry & Books", "Products", "Shayar"], t1: "Poetry & Books", s1: "Read poetry and get books online", t2: "Recommended Products", s2: "Our favorite picks", t3: "Shayar", s3: "Whose words live in hearts for centuries", buy: "Order Now", wa: "Contact on WhatsApp", close: "Close" }
         };
 
         function changeLang(lang) {
@@ -229,7 +228,7 @@
                 renderCards();
                 renderProducts();
                 renderShayarSection();
-                changeLang('ur'); 
+                changeLang('en'); // Default language English
                 
             } catch (error) { console.error("Error:", error); }
         }
@@ -246,6 +245,7 @@
                 const storyHTML = item.fullStory ? 
                     `<div class="full-story-text">${item.fullStory}</div>` : '';
 
+                // Maine yahan openModal ke andar index pass kiya hai taake space (khali jagah) ka error khatam ho jaye
                 const cardHTML = `
                     <div class="main-card">
                         ${videoBtnHTML}
@@ -261,7 +261,7 @@
                                     <h3 class="book-title">${item.title}</h3>
                                     <p class="book-price">Rs. ${item.price}</p>
                                 </div>
-                                <button class="buy-btn" onclick="openModal('${item.title}', ${item.price})">Khareedein</button>
+                                <button class="buy-btn" onclick="openModal(${index})">Order Now</button>
                             </div>
                         </div>
                     </div>
@@ -309,16 +309,31 @@
             });
         }
 
+        // FIXED TAB FUNCTION
         function showTab(tabId, element) {
-            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-            element.classList.add('active');
+            // Hide all sections
+            document.querySelectorAll('.tab-section').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Show selected section
+            const activeTab = document.getElementById(tabId);
+            if(activeTab) activeTab.classList.add('active');
+
+            // Remove active class from all links
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+            });
+            // Add active class to clicked link
+            if(element) element.classList.add('active');
         }
 
-        function openModal(bookTitle, price) {
-            document.getElementById('modalBookTitle').innerText = bookTitle;
-            const message = `Assalam o Alaikum, mujhe "${bookTitle}" (Rs. ${price}) khareedni hai. PDF bhej dein.`;
+        // FIXED POPUP FUNCTION (Space error resolved)
+        function openModal(index) {
+            const item = siteData[index];
+            if(!item) return;
+            
+            document.getElementById('modal-buy-title').innerText = "Order Now";
+            const message = `Assalam o Alaikum, mujhe "${item.title}" (Rs. ${item.price}) khareedni hai. PDF bhej dein.`;
             document.getElementById('whatsappLink').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
             document.getElementById('paymentModal').style.display = 'flex';
         }

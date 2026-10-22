@@ -3,189 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetry Mart</title>
+    <title>Sheet Data Test</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Amiri:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
-
-        :root {
-            --primary: #8a1c24;
-            --bg-color: #f9f6f0; 
-            --text-dark: #2c3e50;
-            --card-bg: #ffffff;
-        }
-
-        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-dark); }
-        
-        /* HEADER & TABS */
-        header { display: flex; align-items: center; justify-content: space-between; background-color: var(--card-bg); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--primary); padding: 8px 15px; flex-wrap: wrap; gap: 10px;}
-        .logo { font-size: 20px; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 5px; }
-        
-        nav { display: flex; gap: 8px; flex-wrap: wrap;}
-        nav a { text-decoration: none; color: #7f8c8d; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-family: 'Amiri', serif; display: flex; align-items: center; gap: 4px; transition: 0.3s; background: #f4f1ea; }
-        nav a.active { color: white; background-color: var(--primary); }
-        nav a svg { width: 14px; height: 14px; fill: currentColor; }
-
-        .container { max-width: 1400px; margin: 0 auto; padding: 15px; }
-        
-        /* GRID: Laptop par 2, Mobile par 1 */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; align-items: start; }
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; gap: 15px; } }
-
-        /* MAIN CARDS */
-        .main-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eaddcd; padding: 25px; display: flex; flex-direction: column; }
-        
-        /* GHAZAL SECTION */
-        .sher-part { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #d1c4b1; }
-        .sher-author { font-family: 'Amiri', serif; font-size: 22px; color: var(--primary); font-weight: 700; margin: 0 0 15px 0; }
-        .full-story-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 20px; line-height: 2.6; color: #1a1a1a; text-align: center; word-wrap: break-word; }
-
-        /* BOOK SECTION */
-        .book-part { display: flex; gap: 20px; align-items: center; }
-        .book-img { width: 80px; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .book-details { flex-grow: 1; }
-        .book-title { font-size: 20px; font-weight: 600; margin: 0 0 5px 0; font-family: 'Amiri', serif; }
-        .book-price { font-size: 18px; color: var(--primary); font-weight: 700; margin: 0 0 10px 0; }
-        .buy-btn { background-color: var(--primary); color: white; padding: 10px 15px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; text-align: center; }
-
-        /* PRODUCTS SECTION */
-        .product-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eaddcd; padding: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;}
-        .prod-img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 15px; }
-        .product-name { font-size: 18px; font-weight: 600; margin-bottom: 15px; font-family: 'Amiri', serif; }
-        .affiliate-btn { background-color: #d4af37; color: #111; padding: 10px; text-decoration: none; border-radius: 8px; font-weight: 700; display: block; }
-
-        .tab-section { display: none; }
-        .tab-section.active { display: block; }
-        .loading { text-align: center; font-size: 20px; color: var(--primary); margin-top: 50px; font-family: 'Amiri', serif; }
+        body { font-family: monospace; padding: 20px; background: #f4f4f4; }
+        .box { background: white; border-left: 5px solid #8a1c24; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h3 { margin-top: 0; color: #8a1c24; }
+        .error { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">✒️ Poetry Mart</div>
-        <nav>
-            <a class="active" onclick="showTab('tab-asthaar', this)">
-                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/></svg>
-                Books & Poetry
-            </a>
-            <a onclick="showTab('tab-products', this)">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h2v2H6zm0 4h8v2H6zm10 0h2v2h-2zm-6-4h8v2h-8z"/></svg>
-                Products
-            </a>
-            <a onclick="showTab('tab-shayar', this)">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                Shayar
-            </a>
-        </nav>
-    </header>
-
-    <div class="container">
-        <div id="loadingScreen" class="loading">Data load ho raha hai...</div>
-
-        <div id="tab-asthaar" class="tab-section"><div id="main-grid" class="grid"></div></div>
-        <div id="tab-products" class="tab-section"><div id="products-grid" class="grid"></div></div>
-        <div id="tab-shayar" class="tab-section"><div id="shayar-grid" class="grid"></div></div>
-    </div>
+    <h2>Data Check (Test)</h2>
+    <div id="output">Loading...</div>
 
     <script>
-        // AAPKA NAYA SHEET LINK (CSV FORMAT MEIN CONVERT KAR DIYA HAI)
+        // AAPKA NAYA LINK
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO/pub?output=csv"; 
 
-        async function loadData() {
+        async function testData() {
             try {
                 const response = await fetch(SHEET_URL);
                 const data = await response.text();
-                
                 const rows = data.split('\n');
-                let htmlBooks = '';
-                let htmlShayar = '';
-                let htmlProducts = '';
-                let displayedAuthors = new Set();
+                let html = "";
 
-                for(let i = 1; i < rows.length; i++) {
-                    let row = rows[i].trim();
-                    if(row === '') continue;
-
-                    const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || row.split(',');
-                    const cleanCol = (index) => cols[index] ? cols[index].replace(/^"|"$/g, '').trim() : '';
-
-                    // Mapping columns (A se L tak)
-                    const title = cleanCol(0);      // A
-                    const price = cleanCol(2);      // C
-                    const img = cleanCol(3);        // D
-                    const shayarName = cleanCol(5); // F
-                    const ghazal = cleanCol(6);     // G
-                    const prodName = cleanCol(9);   // J
-                    const prodLink = cleanCol(10);  // K
-                    const prodImg = cleanCol(11);   // L
-
-                    if(!title && !ghazal && !prodName) continue;
-
-                    const formattedGhazal = ghazal ? ghazal.replace(/\n/g, '<br>') : '';
-
-                    // 1. BOOKS & POETRY
-                    if(title) {
-                        htmlBooks += `
-                            <div class="main-card">
-                                <div class="sher-part">
-                                    <div class="sher-author">— ${shayarName}</div>
-                                    <div class="full-story-text">${formattedGhazal}</div>
-                                </div>
-                                <div class="book-part">
-                                    <img src="${img || 'https://via.placeholder.com/100'}" class="book-img">
-                                    <div class="book-details">
-                                        <h3 class="book-title">${title}</h3>
-                                        <p class="book-price">Rs. ${price}</p>
-                                        <button class="buy-btn">Khareedein</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
-
-                    // 2. SHAYAR
-                    if(shayarName && !displayedAuthors.has(shayarName)) {
-                        displayedAuthors.add(shayarName);
-                        htmlShayar += `
-                            <div class="main-card">
-                                <h3 style="text-align:center; color:var(--primary); font-family:'Amiri', serif; margin-top:0; font-size:22px;">${shayarName}</h3>
-                                <div class="full-story-text">${formattedGhazal}</div>
-                            </div>
-                        `;
-                    }
-
-                    // 3. PRODUCTS
-                    if(prodName && prodLink) {
-                        htmlProducts += `
-                            <div class="product-card">
-                                <img src="${prodImg || 'https://via.placeholder.com/150'}" class="prod-img">
-                                <h3 class="product-name">${prodName}</h3>
-                                <a href="${prodLink}" target="_blank" class="affiliate-btn">Buy Now</a>
-                            </div>
-                        `;
-                    }
+                // Pehli 3 lines check karte hain
+                for(let i = 0; i < 3; i++) {
+                    if(!rows[i] || rows[i].trim() === '') continue;
+                    
+                    // Data ko columns mein todna
+                    const cols = rows[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || rows[i].split(',');
+                    
+                    html += `<div class="box">`;
+                    html += `<h3>Line ${i+1}</h3>`;
+                    html += `<p><b>A (Title):</b> ${cols[0] || 'Khali'}</p>`;
+                    html += `<p><b>B (Author):</b> ${cols[1] || 'Khali'}</p>`;
+                    html += `<p><b>F (Shayar Name):</b> ${cols[5] || 'Khali'}</p>`;
+                    html += `<p><b>G (Ghazal):</b> ${cols[6] || 'Khali'}</p>`;
+                    html += `</div>`;
                 }
 
-                document.getElementById('main-grid').innerHTML = htmlBooks || '<p>No books found.</p>';
-                document.getElementById('shayar-grid').innerHTML = htmlShayar || '<p>No shayar found.</p>';
-                document.getElementById('products-grid').innerHTML = htmlProducts || '<p>No products found.</p>';
-                
-                document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('tab-asthaar').classList.add('active');
+                document.getElementById('output').innerHTML = html;
 
             } catch (error) {
-                document.getElementById('loadingScreen').innerHTML = "Error: " + error.message;
+                document.getElementById('output').innerHTML = `<p class="error">Error: ${error.message}</p>`;
             }
         }
 
-        function showTab(tabId, element) {
-            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
-            document.getElementById('tab-' + tabId.split('-')[1]).classList.add('active');
-            
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        window.onload = loadData;
+        testData();
     </script>
 </body>
 </html>

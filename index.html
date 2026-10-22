@@ -87,8 +87,8 @@
     </div>
 
     <script>
-        // AAPKA NAYA PUBLISHED CSV LINK
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQwAgHNV4OdrsqZp6fLMufI0ok4N_8vOz2P7z1ASaVoA4SkauLDGT1O8C3Px06o5cNlsAHQ5vZcjMZD/pub?output=csv"; 
+        // AAPKA NAYA SHEET LINK (CSV FORMAT MEIN CONVERT KAR DIYA HAI)
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO/pub?output=csv"; 
 
         async function loadData() {
             try {
@@ -108,7 +108,7 @@
                     const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || row.split(',');
                     const cleanCol = (index) => cols[index] ? cols[index].replace(/^"|"$/g, '').trim() : '';
 
-                    // Mapping columns
+                    // Mapping columns (A se L tak)
                     const title = cleanCol(0);      // A
                     const price = cleanCol(2);      // C
                     const img = cleanCol(3);        // D
@@ -122,7 +122,7 @@
 
                     const formattedGhazal = ghazal ? ghazal.replace(/\n/g, '<br>') : '';
 
-                    // 1. BOOKS
+                    // 1. BOOKS & POETRY
                     if(title) {
                         htmlBooks += `
                             <div class="main-card">

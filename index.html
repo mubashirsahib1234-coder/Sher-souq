@@ -24,30 +24,29 @@
         header { display: flex; align-items: center; justify-content: space-between; background-color: var(--card-bg); padding: 15px 5%; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary); flex-wrap: wrap; gap: 15px; }
         .logo { font-size: 24px; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); }
         
-        .nav-tabs { display: flex; gap: 10px; }
-        .nav-tabs a { text-decoration: none; color: var(--text-light); font-weight: 500; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-size: 15px; }
+        .nav-tabs { display: flex; gap: 10px; flex-wrap: wrap;}
+        .nav-tabs a { text-decoration: none; color: #7f8c8d; font-weight: 500; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-size: 15px; }
         .nav-tabs a.active, .nav-tabs a:hover { color: white; background-color: var(--primary); }
 
         .lang-switch { display: flex; gap: 5px; background: #f0f0f0; padding: 4px; border-radius: 20px; }
         .lang-switch button { border: none; background: transparent; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-weight: 600; font-size: 12px; color: #555; transition: 0.3s; }
         .lang-switch button.active { background: var(--primary); color: white; }
 
+        /* SEARCH BAR */
+        .search-container { max-width: 800px; margin: 20px auto 0 auto; padding: 0 20px; display: none; }
+        .search-box { width: 100%; padding: 12px 20px; font-size: 15px; border: 2px solid #eee; border-radius: 30px; outline: none; transition: 0.3s; font-family: 'Poppins', sans-serif; }
+        .search-box:focus { border-color: var(--primary); box-shadow: 0 4px 15px rgba(138, 28, 36, 0.1); }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
         
-        /* SECTION TITLES */
         .section-title { font-family: 'Amiri', serif; font-size: 28px; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; display: inline-block; }
 
-        /* BOOKS SLIDER (Row) */
+        /* BOOKS SLIDER */
         .books-slider { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 40px; scrollbar-width: thin; }
         .book-slide { min-width: 160px; background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
         .book-slide:hover { transform: translateY(-5px); border-color: var(--primary); }
         .book-slide img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; }
         .book-slide-title { font-size: 14px; font-weight: 600; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        /* PROMOTIONAL BANNER */
-        .promo-banner { background: linear-gradient(135deg, var(--primary) 0%, #4a0f14 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 40px; box-shadow: 0 10px 20px rgba(138, 28, 36, 0.2); }
-        .promo-banner h2 { font-family: 'Amiri', serif; font-size: 32px; margin-bottom: 10px; }
-        .promo-banner p { font-size: 16px; opacity: 0.9; }
 
         /* MAIN GRID */
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; align-items: start; }
@@ -58,10 +57,8 @@
         .sher-content { padding: 25px; text-align: center; flex-grow: 1; }
         .shayar-name { font-family: 'Amiri', serif; font-size: 24px; color: var(--primary); margin-bottom: 15px; }
         
-        /* BLUR PREVIEW SYSTEM */
-        .ghazal-preview-container { position: relative; max-height: 250px; overflow: hidden; margin-bottom: 20px; }
-        .ghazal-preview { font-family: 'Noto Nastaliq Urdu', serif; font-size: 19px; line-height: 2.4; color: #1a1a1a; text-align: center; }
-        .ghazal-blur-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 80%); pointer-events: none; }
+        /* CLEAR POETRY */
+        .ghazal-preview { font-family: 'Noto Nastaliq Urdu', serif; font-size: 19px; line-height: 2.4; color: #1a1a1a; text-align: center; margin-bottom: 20px; }
         
         /* BOOK INFO IN CARD */
         .card-book-info { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-top: 1px dashed #ddd; }
@@ -83,6 +80,10 @@
         .product-card:hover { transform: translateY(-5px); }
         .product-img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
         .product-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+
+        /* SHAYAR SECTION */
+        .shayar-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; border: 1px solid #eee; }
+        .shayar-box h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 24px; margin-bottom: 10px; }
         
         .tab-section { display: none; }
         .tab-section.active { display: block; animation: fadeIn 0.5s; }
@@ -90,14 +91,26 @@
         
         .loading { text-align: center; padding: 50px; font-size: 20px; color: var(--primary); font-family: 'Amiri', serif; }
 
+        /* MODALS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        
+        /* PDF PREVIEW MODAL (Custom Design) */
+        .pdf-modal-content { background: white; padding: 15px; border-radius: 15px; width: 95%; max-width: 900px; height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; }
+        .pdf-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2px solid #eee; margin-bottom: 10px; }
+        .pdf-header h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 22px; margin: 0; }
+        .pdf-iframe-container { flex-grow: 1; width: 100%; background: #f4f4f4; border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
+        .pdf-iframe-container iframe { width: 100%; height: 100%; border: none; }
+        .pdf-footer { display: flex; justify-content: center; gap: 15px; }
+        
+        .whatsapp-buy-btn { background: var(--whatsapp); color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+        .whatsapp-buy-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+        .close-btn { background: #eee; color: #333; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .close-btn:hover { background: #ddd; }
+
         /* PAYMENT MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 40px 30px; border-radius: 15px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .modal-content h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 26px; margin-bottom: 15px; }
-        .modal-content p { color: #666; font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
-        .whatsapp-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.3s; }
-        .whatsapp-btn:hover { background: #1ebe5d; }
-        .close-btn { background: #eee; color: #333; border: none; padding: 10px 20px; border-radius: 8px; margin-top: 15px; cursor: pointer; font-weight: 600; width: 100%; }
+        .payment-modal-content { background: white; padding: 40px 30px; border-radius: 15px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .payment-modal-content h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 26px; margin-bottom: 15px; }
+        .payment-modal-content p { color: #666; font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -106,65 +119,86 @@
         <div class="logo">✒️ Poetry Mart</div>
         <div class="nav-tabs">
             <a class="active" onclick="switchTab('books', this)" id="tab-books-btn">Poetry & Books</a>
-            <a onclick="switchTab('products', this)" id="tab-products-btn">Products</a>
+            <a onclick="switchTab('shayar', this)" id="tab-shayar-btn">Shayar</a>
+            <a onclick="switchTab('products', this)" id="tab-products-btn">Our Collection</a>
         </div>
         <div class="lang-switch">
             <button onclick="changeLang('ur')" id="btn-ur" class="active">اردو</button>
+            <button onclick="changeLang('hi')" id="btn-hi">हिंदी</button>
             <button onclick="changeLang('en')" id="btn-en">EN</button>
         </div>
     </header>
 
+    <div class="search-container" id="searchContainer">
+        <input type="text" id="searchInput" class="search-box" placeholder="Shayar ka naam likhein..." onkeyup="searchShayar()">
+    </div>
+
     <div class="container">
         <div id="loadingScreen" class="loading">Data load ho raha hai...</div>
         
-        <!-- BOOKS & POETRY SECTION -->
         <div id="books-section" class="tab-section">
-            
-            <!-- 1. Books Row (Slider) -->
             <h2 class="section-title">Featured Books</h2>
             <div class="books-slider" id="books-slider"></div>
 
-            <!-- 2. Promo Banner -->
-            <div class="promo-banner">
-                <h2>Kalam-e-Sufiya</h2>
-                <p>Parhein purani shayari aur sufiyana kalaam ki behtareen kitabein</p>
-            </div>
-
-            <!-- 3. Poetry Cards (Blur System) -->
             <h2 class="section-title">Poetry Collection</h2>
             <div id="books-grid" class="grid"></div>
         </div>
 
-        <!-- PRODUCTS SECTION -->
+        <div id="shayar-section" class="tab-section">
+            <h2 class="section-title">Shayar</h2>
+            <div id="shayar-grid" class="grid"></div>
+        </div>
+
         <div id="products-section" class="tab-section">
             <h2 class="section-title">Our Collection</h2>
             <div id="products-grid" class="product-grid"></div>
         </div>
     </div>
 
-    <!-- PAYMENT / ORDER MODAL (Jab koi Read/Buy par click karega) -->
+    <!-- PDF PREVIEW MODAL (With Buy Button) -->
+    <div id="pdfModal" class="modal">
+        <div class="pdf-modal-content">
+            <div class="pdf-header">
+                <h3 id="pdfBookTitle">Book Preview</h3>
+                <button onclick="closeModal('pdfModal')" class="close-btn" style="padding: 5px 10px;">✕</button>
+            </div>
+            
+            <!-- Note for user -->
+            <p style="text-align:center; color:var(--primary); font-size:14px; margin-bottom:10px; font-weight:600;">
+                ⚠️ Yeh sirf 5 pages ka preview hai. Puri kitab ke liye neeche button dabayein.
+            </p>
+
+            <div class="pdf-iframe-container">
+                <iframe id="pdfIframe" src=""></iframe>
+            </div>
+
+            <div class="pdf-footer">
+                <a href="#" id="whatsappBuyBtn" target="_blank" class="whatsapp-buy-btn">💬 Puri Kitab Khareedein</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT CONFIRMATION MODAL (Direct Click) -->
     <div id="paymentModal" class="modal">
-        <div class="modal-content">
+        <div class="payment-modal-content">
             <h3>Kitab Khareedein</h3>
-            <p>Aap <b><span id="modalBookTitle"></span></b> parhna chahte hain. Puri kitab (PDF) hasil karne ke liye baraye meharbani payment karein aur WhatsApp par rabta karein.</p>
-            
-            <!-- Yahan apna WhatsApp number dalein (Country code ke sath bina + ke) -->
-            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-btn">💬 WhatsApp par Rabta Karein</a>
-            
-            <button onclick="closeModal()" class="close-btn">Band Karein</button>
+            <p>Aap <b><span id="modalBookTitle"></span></b> parhna chahte hain. Puri kitab (PDF) hasil karne ke liye baraye meharbani WhatsApp par rabta karein.</p>
+            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-btn" style="display:block; background:var(--whatsapp); color:white; padding:15px; border-radius:8px; text-decoration:none; font-weight:600; font-size:16px;">💬 WhatsApp par Rabta Karein</a>
+            <button onclick="closeModal('paymentModal')" class="close-btn" style="margin-top:15px; width:100%;">Band Karein</button>
         </div>
     </div>
 
     <script>
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO/pub?output=csv"; 
-        const MY_WHATSAPP_NUMBER = "923226914318"; // Aapka WhatsApp Number
+        const MY_WHATSAPP_NUMBER = "923226914318"; 
         
         let allData = [];
         let currentLang = 'ur';
 
         const translations = {
-            ur: { tab1: "شاعری اور کتابیں", tab2: "مصنوعات", buy: "خریدیں", read: "پڑھیں" },
-            en: { tab1: "Poetry & Books", tab2: "Products", buy: "Buy Now", read: "Read" }
+            ur: { tab1: "شاعری اور کتابیں", tab2: "شاعر", tab3: "ہماری کلیکشن", buy: "خریدیں", read: "پڑھیں", search: "شاعر کا نام لکھیں..." },
+            hi: { tab1: "कविता और किताबें", tab2: "शायर", tab3: "हमारा संग्रह", buy: "खरीदें", read: "पढ़ें", search: "शायर का नाम लिखें..." },
+            en: { tab1: "Poetry & Books", tab2: "Shayar", tab3: "Our Collection", buy: "Buy Now", read: "Read", search: "Search Shayar..." }
         };
 
         function parseCSV(text) {
@@ -217,6 +251,7 @@
 
                 renderBooksRow();
                 renderPoetryCards();
+                renderShayar();
                 renderProducts();
                 
                 document.getElementById('loadingScreen').style.display = 'none';
@@ -237,7 +272,7 @@
                 if(!uniqueTitles.has(item.title)) {
                     uniqueTitles.add(item.title);
                     slider.innerHTML += `
-                        <div class="book-slide" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">
+                        <div class="book-slide" onclick="openPdf('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">
                             <img src="${item.img}" onerror="this.src='https://via.placeholder.com/150x200?text=No+Image'">
                             <div class="book-slide-title">${item.title}</div>
                         </div>
@@ -261,7 +296,7 @@
                                 <div class="card-book-price">Rs. ${item.price}</div>
                                 <div class="action-btns">
                                     <button class="btn btn-primary" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">${translations[currentLang].buy}</button>
-                                    <button class="btn btn-outline" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">📖 ${translations[currentLang].read}</button>
+                                    <button class="btn btn-outline" onclick="openPdf('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">📖 ${translations[currentLang].read}</button>
                                 </div>
                             </div>
                         </div>
@@ -272,14 +307,36 @@
                     <div class="card">
                         <div class="sher-content">
                             <div class="shayar-name">${item.shayar}</div>
-                            <div class="ghazal-preview-container">
-                                <div class="ghazal-preview">${item.ghazal.replace(/\n/g, '<br>')}</div>
-                                <div class="ghazal-blur-overlay"></div>
-                            </div>
+                            <div class="ghazal-preview">${item.ghazal.replace(/\n/g, '<br>')}</div>
                         </div>
                         ${bookPart}
                     </div>
                 `;
+            });
+        }
+
+        function renderShayar() {
+            const grid = document.getElementById('shayar-grid');
+            grid.innerHTML = '';
+            let uniqueShayars = new Set();
+
+            allData.forEach(item => {
+                if(item.shayar && !uniqueShayars.has(item.shayar)) {
+                    uniqueShayars.add(item.shayar);
+                    grid.innerHTML += `
+                        <div class="shayar-box" data-name="${item.shayar.toLowerCase()}">
+                            <h3>${item.shayar}</h3>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function searchShayar() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.shayar-box').forEach(box => {
+                const name = box.getAttribute('data-name');
+                box.style.display = name.includes(query) ? 'block' : 'none';
             });
         }
 
@@ -299,7 +356,29 @@
             });
         }
 
-        // PAYMENT MODAL FUNCTION
+        // CUSTOM PDF VIEWER WITH BUY BUTTON
+        function openPdf(title, link) {
+            if(!link || link === '') {
+                alert("Is kitab ki PDF link mojood nahi hai.");
+                return;
+            }
+            
+            document.getElementById('pdfBookTitle').innerText = title;
+            
+            let previewLink = link;
+            if(link.includes('drive.google.com')) {
+                previewLink = link.replace('/view', '/preview');
+            }
+            
+            document.getElementById('pdfIframe').src = previewLink;
+
+            // WhatsApp Buy Link Setup inside PDF viewer
+            const message = `Assalam o Alaikum, mujhe "${title}" ki puri PDF khareedni hai. Payment ka tareeqa batayein.`;
+            document.getElementById('whatsappBuyBtn').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+            document.getElementById('pdfModal').style.display = 'flex';
+        }
+
         function openPaymentModal(bookTitle) {
             document.getElementById('modalBookTitle').innerText = bookTitle;
             const message = `Assalam o Alaikum, mujhe "${bookTitle}" ki puri PDF khareedni hai. Payment ka tareeqa batayein.`;
@@ -307,8 +386,11 @@
             document.getElementById('paymentModal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('paymentModal').style.display = 'none';
+        function closeModal(modalId) {
+            if(modalId === 'pdfModal') {
+                document.getElementById('pdfIframe').src = '';
+            }
+            document.getElementById(modalId).style.display = 'none';
         }
 
         function switchTab(tabName, element) {
@@ -316,6 +398,9 @@
             document.getElementById(tabName + '-section').classList.add('active');
             document.querySelectorAll('.nav-tabs a').forEach(a => a.classList.remove('active'));
             element.classList.add('active');
+
+            const searchContainer = document.getElementById('searchContainer');
+            searchContainer.style.display = (tabName === 'shayar') ? 'block' : 'none';
         }
 
         function changeLang(lang) {
@@ -324,7 +409,9 @@
             document.getElementById('btn-' + lang).classList.add('active');
             
             document.getElementById('tab-books-btn').innerText = translations[lang].tab1;
-            document.getElementById('tab-products-btn').innerText = translations[lang].tab2;
+            document.getElementById('tab-shayar-btn').innerText = translations[lang].tab2;
+            document.getElementById('tab-products-btn').innerText = translations[lang].tab3;
+            document.getElementById('searchInput').placeholder = translations[lang].search;
             
             renderPoetryCards();
             renderProducts();

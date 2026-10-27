@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poetry Mart - Premium</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
 
@@ -54,11 +57,13 @@
 
         /* CARD DESIGN */
         .card { background: var(--card-bg); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); border: 1px solid #eee; display: flex; flex-direction: column; overflow: hidden; }
-        .sher-content { padding: 25px; text-align: center; flex-grow: 1; }
+        .sher-content { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
         .shayar-name { font-family: 'Amiri', serif; font-size: 24px; color: var(--primary); margin-bottom: 15px; }
         
-        /* CLEAR POETRY */
-        .ghazal-preview { font-family: 'Noto Nastaliq Urdu', serif; font-size: 19px; line-height: 2.4; color: #1a1a1a; text-align: center; margin-bottom: 20px; }
+        /* HALF POETRY PREVIEW */
+        .ghazal-preview { font-family: 'Noto Nastaliq Urdu', serif; font-size: 19px; line-height: 2.4; color: #1a1a1a; text-align: center; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+        .read-more-btn { color: #3498db; cursor: pointer; font-weight: 600; font-size: 14px; margin-bottom: 15px; display: inline-block; transition: 0.3s; }
+        .read-more-btn:hover { color: var(--primary); }
         
         /* BOOK INFO IN CARD */
         .card-book-info { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-top: 1px dashed #ddd; }
@@ -74,7 +79,7 @@
         .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
         .btn-outline:hover { background: var(--primary); color: white; }
 
-        /* PRODUCTS COLLECTION */
+        /* PRODUCTS */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         .product-card { background: white; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
@@ -82,8 +87,9 @@
         .product-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
 
         /* SHAYAR SECTION */
-        .shayar-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; border: 1px solid #eee; }
-        .shayar-box h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 24px; margin-bottom: 10px; }
+        .shayar-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+        .shayar-box:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(138, 28, 36, 0.1); }
+        .shayar-box h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 24px; margin-bottom: 5px; }
         
         .tab-section { display: none; }
         .tab-section.active { display: block; animation: fadeIn 0.5s; }
@@ -93,24 +99,27 @@
 
         /* MODALS */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
-        
-        /* PDF PREVIEW MODAL (Custom Design) */
-        .pdf-modal-content { background: white; padding: 15px; border-radius: 15px; width: 95%; max-width: 900px; height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; }
-        .pdf-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2px solid #eee; margin-bottom: 10px; }
-        .pdf-header h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 22px; margin: 0; }
-        .pdf-iframe-container { flex-grow: 1; width: 100%; background: #f4f4f4; border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
-        .pdf-iframe-container iframe { width: 100%; height: 100%; border: none; }
-        .pdf-footer { display: flex; justify-content: center; gap: 15px; }
-        
-        .whatsapp-buy-btn { background: var(--whatsapp); color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-        .whatsapp-buy-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
-        .close-btn { background: #eee; color: #333; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .close-btn:hover { background: #ddd; }
+        .modal-content { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .close-btn { background: #ff4757; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; position: absolute; top: 15px; right: 15px; font-size: 16px; transition: 0.3s; z-index: 10; }
+        .close-btn:hover { background: #ff6b81; }
 
-        /* PAYMENT MODAL */
-        .payment-modal-content { background: white; padding: 40px 30px; border-radius: 15px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .payment-modal-content h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 26px; margin-bottom: 15px; }
-        .payment-modal-content p { color: #666; font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
+        /* FULL GHAZAL MODAL */
+        .ghazal-modal-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 20px; line-height: 2.6; color: #111; margin: 20px 0; text-align: center; }
+        .share-btn-modal { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .share-btn-modal:hover { background: #2980b9; }
+        
+        /* PDF PREVIEW MODAL */
+        .pdf-modal-content { background: #f4f4f4; padding: 15px; border-radius: 10px; width: 95%; max-width: 800px; height: 90vh; display: flex; flex-direction: column; position: relative; }
+        .pdf-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2px solid #ddd; margin-bottom: 10px; }
+        .pdf-header h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 20px; margin: 0; }
+        #pdf-render-container { flex-grow: 1; width: 100%; overflow-y: auto; display: flex; flex-direction: column; align-items: center; background: #525659; padding: 20px; border-radius: 5px; position: relative; }
+        #pdf-render-container canvas { margin-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); max-width: 100%; height: auto; }
+        .pdf-lock-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 300px; background: linear-gradient(to bottom, rgba(82, 86, 89, 0) 0%, rgba(82, 86, 89, 1) 50%); display: none; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 30px; }
+        .lock-box { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width: 90%; max-width: 400px; }
+        .lock-box h4 { color: var(--primary); margin-bottom: 10px; font-size: 18px; }
+        .lock-box p { font-size: 14px; color: #555; margin-bottom: 15px; }
+        .whatsapp-buy-btn { background: var(--whatsapp); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; display: block; transition: 0.3s; }
+        .whatsapp-buy-btn:hover { background: #1ebe5d; }
     </style>
 </head>
 <body>
@@ -120,7 +129,7 @@
         <div class="nav-tabs">
             <a class="active" onclick="switchTab('books', this)" id="tab-books-btn">Poetry & Books</a>
             <a onclick="switchTab('shayar', this)" id="tab-shayar-btn">Shayar</a>
-            <a onclick="switchTab('products', this)" id="tab-products-btn">Our Collection</a>
+            <a onclick="switchTab('products', this)" id="tab-products-btn">Products</a>
         </div>
         <div class="lang-switch">
             <button onclick="changeLang('ur')" id="btn-ur" class="active">اردو</button>
@@ -137,68 +146,86 @@
         <div id="loadingScreen" class="loading">Data load ho raha hai...</div>
         
         <div id="books-section" class="tab-section">
-            <h2 class="section-title">Featured Books</h2>
+            <h2 class="section-title" id="title-books">Featured Books</h2>
             <div class="books-slider" id="books-slider"></div>
 
-            <h2 class="section-title">Poetry Collection</h2>
+            <h2 class="section-title" id="title-poetry">Poetry Collection</h2>
             <div id="books-grid" class="grid"></div>
         </div>
 
         <div id="shayar-section" class="tab-section">
-            <h2 class="section-title">Shayar</h2>
+            <h2 class="section-title" id="title-shayar">Shayar</h2>
             <div id="shayar-grid" class="grid"></div>
         </div>
 
         <div id="products-section" class="tab-section">
-            <h2 class="section-title">Our Collection</h2>
+            <h2 class="section-title" id="title-products">Products</h2>
             <div id="products-grid" class="product-grid"></div>
         </div>
     </div>
 
-    <!-- PDF PREVIEW MODAL (With Buy Button) -->
+    <!-- FULL GHAZAL MODAL -->
+    <div id="ghazalModal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal('ghazalModal')" class="close-btn">✕</button>
+            <h3 id="modalShayarName" style="color: var(--primary); font-family: 'Amiri', serif; font-size: 28px; margin-bottom: 20px;"></h3>
+            <div class="ghazal-modal-text" id="modalGhazalText"></div>
+            <button class="share-btn-modal" onclick="shareGhazal()">📤 Share Ghazal</button>
+        </div>
+    </div>
+
+    <!-- SHAYAR DETAIL MODAL -->
+    <div id="shayarDetailModal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal('shayarDetailModal')" class="close-btn">✕</button>
+            <h3 id="shayarDetailName" style="color: var(--primary); font-family: 'Amiri', serif; font-size: 28px; margin-bottom: 20px;"></h3>
+            <div id="shayarDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- CUSTOM PDF VIEWER MODAL -->
     <div id="pdfModal" class="modal">
         <div class="pdf-modal-content">
             <div class="pdf-header">
                 <h3 id="pdfBookTitle">Book Preview</h3>
-                <button onclick="closeModal('pdfModal')" class="close-btn" style="padding: 5px 10px;">✕</button>
+                <button onclick="closePdfModal()" class="close-btn" style="position:static;">✕ Close</button>
             </div>
             
-            <!-- Note for user -->
-            <p style="text-align:center; color:var(--primary); font-size:14px; margin-bottom:10px; font-weight:600;">
-                ⚠️ Yeh sirf 5 pages ka preview hai. Puri kitab ke liye neeche button dabayein.
-            </p>
-
-            <div class="pdf-iframe-container">
-                <iframe id="pdfIframe" src=""></iframe>
-            </div>
-
-            <div class="pdf-footer">
-                <a href="#" id="whatsappBuyBtn" target="_blank" class="whatsapp-buy-btn">💬 Puri Kitab Khareedein</a>
+            <div id="pdf-render-container">
+                <div id="pdfLoader" style="color:white; margin-top:50px;">PDF Load ho rahi hai...</div>
+                <div id="pdfLockOverlay" class="pdf-lock-overlay">
+                    <div class="lock-box">
+                        <h4>Preview Khatam Ho Gaya!</h4>
+                        <p>Yeh sirf 5 pages ka preview tha. Puri kitab parhne ke liye neeche button dabayein.</p>
+                        <a href="#" id="whatsappBuyBtn" target="_blank" class="whatsapp-buy-btn">💬 Puri Kitab Khareedein</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- PAYMENT CONFIRMATION MODAL (Direct Click) -->
+    <!-- PAYMENT MODAL -->
     <div id="paymentModal" class="modal">
-        <div class="payment-modal-content">
-            <h3>Kitab Khareedein</h3>
-            <p>Aap <b><span id="modalBookTitle"></span></b> parhna chahte hain. Puri kitab (PDF) hasil karne ke liye baraye meharbani WhatsApp par rabta karein.</p>
-            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-btn" style="display:block; background:var(--whatsapp); color:white; padding:15px; border-radius:8px; text-decoration:none; font-weight:600; font-size:16px;">💬 WhatsApp par Rabta Karein</a>
-            <button onclick="closeModal('paymentModal')" class="close-btn" style="margin-top:15px; width:100%;">Band Karein</button>
+        <div class="modal-content" style="max-width:400px;">
+            <button onclick="closeModal('paymentModal')" class="close-btn">✕</button>
+            <h3 style="color:var(--primary); margin-bottom:15px;">Kitab Khareedein</h3>
+            <p style="color:#666; margin-bottom:20px;">Aap <b><span id="modalBookTitle"></span></b> parhna chahte hain. Puri kitab (PDF) hasil karne ke liye WhatsApp par rabta karein.</p>
+            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-buy-btn" style="margin-bottom:15px;">💬 WhatsApp par Rabta Karein</a>
         </div>
     </div>
 
     <script>
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO/pub?output=csv"; 
         const MY_WHATSAPP_NUMBER = "923226914318"; 
+        const PAGES_TO_SHOW = 5; 
         
         let allData = [];
         let currentLang = 'ur';
 
         const translations = {
-            ur: { tab1: "شاعری اور کتابیں", tab2: "شاعر", tab3: "ہماری کلیکشن", buy: "خریدیں", read: "پڑھیں", search: "شاعر کا نام لکھیں..." },
-            hi: { tab1: "कविता और किताबें", tab2: "शायर", tab3: "हमारा संग्रह", buy: "खरीदें", read: "पढ़ें", search: "शायर का नाम लिखें..." },
-            en: { tab1: "Poetry & Books", tab2: "Shayar", tab3: "Our Collection", buy: "Buy Now", read: "Read", search: "Search Shayar..." }
+            ur: { tab1: "شاعری اور کتابیں", tab2: "شاعر", tab3: "مصنوعات", title1: "نمایاں کتابیں", title2: "شاعری کا مجموعہ", title3: "مصنوعات", buy: "خریدیں", read: "مزید پڑھیں →", search: "شاعر کا نام لکھیں..." },
+            hi: { tab1: "कविता और किताबें", tab2: "शायर", tab3: "उत्पाद", title1: "प्रमुख किताबें", title2: "कविता संग्रह", title3: "उत्पाद", buy: "खरीदें", read: "और पढ़ें →", search: "शायर का नाम लिखें..." },
+            en: { tab1: "Poetry & Books", tab2: "Shayar", tab3: "Products", title1: "Featured Books", title2: "Poetry Collection", title3: "Products", buy: "Buy Now", read: "Read More →", search: "Search Shayar..." }
         };
 
         function parseCSV(text) {
@@ -256,6 +283,7 @@
                 
                 document.getElementById('loadingScreen').style.display = 'none';
                 document.getElementById('books-section').classList.add('active');
+                changeLang('ur');
                 
             } catch (error) {
                 document.getElementById('loadingScreen').innerText = "Data load nahi hua. Sheet check karein.";
@@ -272,7 +300,7 @@
                 if(!uniqueTitles.has(item.title)) {
                     uniqueTitles.add(item.title);
                     slider.innerHTML += `
-                        <div class="book-slide" onclick="openPdf('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">
+                        <div class="book-slide" onclick="openPdfViewer('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">
                             <img src="${item.img}" onerror="this.src='https://via.placeholder.com/150x200?text=No+Image'">
                             <div class="book-slide-title">${item.title}</div>
                         </div>
@@ -285,7 +313,7 @@
             const grid = document.getElementById('books-grid');
             grid.innerHTML = '';
             
-            allData.forEach(item => {
+            allData.forEach((item, index) => {
                 let bookPart = '';
                 if (item.title && item.img) {
                     bookPart = `
@@ -296,7 +324,7 @@
                                 <div class="card-book-price">Rs. ${item.price}</div>
                                 <div class="action-btns">
                                     <button class="btn btn-primary" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">${translations[currentLang].buy}</button>
-                                    <button class="btn btn-outline" onclick="openPdf('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">📖 ${translations[currentLang].read}</button>
+                                    <button class="btn btn-outline" onclick="openPdfViewer('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">📖 Read</button>
                                 </div>
                             </div>
                         </div>
@@ -307,7 +335,8 @@
                     <div class="card">
                         <div class="sher-content">
                             <div class="shayar-name">${item.shayar}</div>
-                            <div class="ghazal-preview">${item.ghazal.replace(/\n/g, '<br>')}</div>
+                            <div class="ghazal-preview" id="ghazal-${index}">${item.ghazal.replace(/\n/g, '<br>')}</div>
+                            <span class="read-more-btn" onclick="openGhazalModal('${item.shayar.replace(/'/g, "\\'")}', \`${item.ghazal.replace(/`/g, '\\`')}\`)">${translations[currentLang].read}</span>
                         </div>
                         ${bookPart}
                     </div>
@@ -324,7 +353,7 @@
                 if(item.shayar && !uniqueShayars.has(item.shayar)) {
                     uniqueShayars.add(item.shayar);
                     grid.innerHTML += `
-                        <div class="shayar-box" data-name="${item.shayar.toLowerCase()}">
+                        <div class="shayar-box" data-name="${item.shayar.toLowerCase()}" onclick="openShayarDetail('${item.shayar.replace(/'/g, "\\'")}')">
                             <h3>${item.shayar}</h3>
                         </div>
                     `;
@@ -356,40 +385,126 @@
             });
         }
 
-        // CUSTOM PDF VIEWER WITH BUY BUTTON
-        function openPdf(title, link) {
-            if(!link || link === '') {
+        // --- MODALS FUNCTIONALITY ---
+        function openGhazalModal(shayar, ghazal) {
+            document.getElementById('modalShayarName').innerText = shayar;
+            document.getElementById('modalGhazalText').innerHTML = ghazal.replace(/\n/g, '<br>');
+            document.getElementById('ghazalModal').style.display = 'flex';
+        }
+
+        function shareGhazal() {
+            const text = document.getElementById('modalGhazalText').innerText;
+            if (navigator.share) {
+                navigator.share({ title: 'Poetry Mart', text: text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert("Ghazal copied to clipboard!");
+            }
+        }
+
+        function openShayarDetail(shayarName) {
+            document.getElementById('shayarDetailName').innerText = shayarName;
+            const details = allData.filter(item => item.shayar === shayarName);
+            let contentHTML = '';
+
+            details.forEach(item => {
+                contentHTML += `
+                    <div class="ghazal-modal-text" style="margin-bottom:30px;">${item.ghazal.replace(/\n/g, '<br>')}</div>
+                `;
+                if(item.title && item.img) {
+                    contentHTML += `
+                        <div style="display:flex; align-items:center; justify-content:center; gap:15px; background:#fafafa; padding:15px; border-radius:10px; margin-top:20px;">
+                            <img src="${item.img}" style="width:50px; height:75px; object-fit:cover; border-radius:5px;">
+                            <div style="text-align:left;">
+                                <div style="font-weight:bold; color:var(--text-dark);">${item.title}</div>
+                                <div style="color:var(--primary); font-weight:bold;">Rs. ${item.price}</div>
+                                <button class="btn btn-primary" style="margin-top:5px;" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">${translations[currentLang].buy}</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('shayarDetailContent').innerHTML = contentHTML;
+            document.getElementById('shayarDetailModal').style.display = 'flex';
+        }
+
+        // --- PDF RENDERING LOGIC ---
+        async function openPdfViewer(title, pdfLink) {
+            if(!pdfLink || pdfLink === '') {
                 alert("Is kitab ki PDF link mojood nahi hai.");
                 return;
             }
-            
-            document.getElementById('pdfBookTitle').innerText = title;
-            
-            let previewLink = link;
-            if(link.includes('drive.google.com')) {
-                previewLink = link.replace('/view', '/preview');
-            }
-            
-            document.getElementById('pdfIframe').src = previewLink;
 
-            // WhatsApp Buy Link Setup inside PDF viewer
-            const message = `Assalam o Alaikum, mujhe "${title}" ki puri PDF khareedni hai. Payment ka tareeqa batayein.`;
+            document.getElementById('pdfBookTitle').innerText = title;
+            document.getElementById('pdfModal').style.display = 'flex';
+            
+            const container = document.getElementById('pdf-render-container');
+            const lockOverlay = document.getElementById('pdfLockOverlay');
+            const loader = document.getElementById('pdfLoader');
+            
+            Array.from(container.children).forEach(child => {
+                if(child.id !== 'pdfLoader' && child.id !== 'pdfLockOverlay') child.remove();
+            });
+            
+            loader.style.display = 'block';
+            lockOverlay.style.display = 'none';
+
+            const message = `Assalam o Alaikum, mujhe "${title}" ki puri PDF khareedni hai.`;
             document.getElementById('whatsappBuyBtn').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-            document.getElementById('pdfModal').style.display = 'flex';
+            try {
+                let directLink = pdfLink;
+                if(pdfLink.includes('drive.google.com')) {
+                    let match = pdfLink.match(/[-\w]{25,}/);
+                    if(match) directLink = `https://drive.google.com/uc?export=download&id=${match[0]}`;
+                }
+
+                const loadingTask = pdfjsLib.getDocument(directLink);
+                const pdf = await loadingTask.promise;
+                loader.style.display = 'none';
+
+                const totalPages = pdf.numPages;
+                const pagesToRender = Math.min(totalPages, PAGES_TO_SHOW);
+
+                for (let pageNum = 1; pageNum <= pagesToRender; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    
+                    container.appendChild(canvas);
+
+                    const renderContext = { canvasContext: context, viewport: viewport };
+                    await page.render(renderContext).promise;
+                }
+
+                container.appendChild(lockOverlay);
+                lockOverlay.style.display = 'flex';
+                setTimeout(() => { container.scrollTop = container.scrollHeight; }, 500);
+
+            } catch (error) {
+                loader.innerText = "PDF load nahi ho saki. Link check karein.";
+                console.error(error);
+            }
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdfModal').style.display = 'none';
+            document.getElementById('pdf-render-container').innerHTML = '<div id="pdfLoader">PDF Load ho rahi hai...</div><div id="pdfLockOverlay" class="pdf-lock-overlay"></div>';
         }
 
         function openPaymentModal(bookTitle) {
             document.getElementById('modalBookTitle').innerText = bookTitle;
-            const message = `Assalam o Alaikum, mujhe "${bookTitle}" ki puri PDF khareedni hai. Payment ka tareeqa batayein.`;
+            const message = `Assalam o Alaikum, mujhe "${bookTitle}" ki puri PDF khareedni hai.`;
             document.getElementById('whatsappLink').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
             document.getElementById('paymentModal').style.display = 'flex';
         }
 
         function closeModal(modalId) {
-            if(modalId === 'pdfModal') {
-                document.getElementById('pdfIframe').src = '';
-            }
             document.getElementById(modalId).style.display = 'none';
         }
 
@@ -400,24 +515,4 @@
             element.classList.add('active');
 
             const searchContainer = document.getElementById('searchContainer');
-            searchContainer.style.display = (tabName === 'shayar') ? 'block' : 'none';
-        }
-
-        function changeLang(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
-            document.getElementById('btn-' + lang).classList.add('active');
-            
-            document.getElementById('tab-books-btn').innerText = translations[lang].tab1;
-            document.getElementById('tab-shayar-btn').innerText = translations[lang].tab2;
-            document.getElementById('tab-products-btn').innerText = translations[lang].tab3;
-            document.getElementById('searchInput').placeholder = translations[lang].search;
-            
-            renderPoetryCards();
-            renderProducts();
-        }
-
-        window.onload = fetchData;
-    </script>
-</body>
-</html>
+            searchContainer.style.display = (tabName === 'shayar') ? 'block' :

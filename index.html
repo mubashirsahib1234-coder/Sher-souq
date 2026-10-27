@@ -1,26 +1,542 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Test 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Mart - Premium</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary: #8a1c24;
+            --primary-hover: #6b141b;
+            --bg-color: #f8f9fa;
+            --text-dark: #2c3e50;
+            --card-bg: #ffffff;
+            --whatsapp: #25D366;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
+        
+        /* HEADER */
+        header { display: flex; align-items: center; justify-content: space-between; background-color: var(--card-bg); padding: 15px 5%; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--primary); flex-wrap: wrap; gap: 15px; }
+        .logo { font-size: 24px; font-family: 'Amiri', serif; font-weight: 700; color: var(--primary); }
+        
+        .nav-tabs { display: flex; gap: 10px; flex-wrap: wrap;}
+        .nav-tabs a { text-decoration: none; color: #7f8c8d; font-weight: 500; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-size: 15px; }
+        .nav-tabs a.active, .nav-tabs a:hover { color: white; background-color: var(--primary); }
+
+        .lang-switch { display: flex; gap: 5px; background: #f0f0f0; padding: 4px; border-radius: 20px; }
+        .lang-switch button { border: none; background: transparent; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-weight: 600; font-size: 12px; color: #555; transition: 0.3s; }
+        .lang-switch button.active { background: var(--primary); color: white; }
+
+        /* SEARCH BAR */
+        .search-container { max-width: 800px; margin: 20px auto 0 auto; padding: 0 20px; display: none; }
+        .search-box { width: 100%; padding: 12px 20px; font-size: 15px; border: 2px solid #eee; border-radius: 30px; outline: none; transition: 0.3s; font-family: 'Poppins', sans-serif; }
+        .search-box:focus { border-color: var(--primary); box-shadow: 0 4px 15px rgba(138, 28, 36, 0.1); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        
+        .section-title { font-family: 'Amiri', serif; font-size: 28px; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; display: inline-block; }
+
+        /* BOOKS SLIDER */
+        .books-slider { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 40px; scrollbar-width: thin; }
+        .book-slide { min-width: 160px; background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
+        .book-slide:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .book-slide img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; }
+        .book-slide-title { font-size: 14px; font-weight: 600; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* MAIN GRID */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; align-items: start; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+        /* CARD DESIGN */
+        .card { background: var(--card-bg); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); border: 1px solid #eee; display: flex; flex-direction: column; overflow: hidden; }
+        .sher-content { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
+        .shayar-name { font-family: 'Amiri', serif; font-size: 24px; color: var(--primary); margin-bottom: 15px; }
+        
+        /* HALF POETRY PREVIEW */
+        .ghazal-preview { font-family: 'Noto Nastaliq Urdu', serif; font-size: 19px; line-height: 2.4; color: #1a1a1a; text-align: center; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+        .read-more-btn { color: #3498db; cursor: pointer; font-weight: 600; font-size: 14px; margin-bottom: 15px; display: inline-block; transition: 0.3s; }
+        .read-more-btn:hover { color: var(--primary); }
+        
+        /* BOOK INFO IN CARD */
+        .card-book-info { display: flex; align-items: center; gap: 15px; background: #fafafa; padding: 15px; border-top: 1px dashed #ddd; }
+        .card-book-img { width: 60px; height: 90px; object-fit: cover; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card-book-details { flex-grow: 1; }
+        .card-book-title { font-weight: 600; font-size: 16px; }
+        .card-book-price { color: var(--primary); font-weight: 700; font-size: 18px; margin: 5px 0; }
+        
+        .action-btns { display: flex; gap: 10px; }
+        .btn { padding: 8px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; border: none; transition: 0.3s; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        /* PRODUCTS */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .product-card { background: white; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
+        .product-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+
+        /* SHAYAR SECTION */
+        .shayar-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+        .shayar-box:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(138, 28, 36, 0.1); }
+        .shayar-box h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 24px; margin-bottom: 5px; }
+        
+        .tab-section { display: none; }
+        .tab-section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .loading { text-align: center; padding: 50px; font-size: 20px; color: var(--primary); font-family: 'Amiri', serif; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .close-btn { background: #ff4757; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; position: absolute; top: 15px; right: 15px; font-size: 16px; transition: 0.3s; z-index: 10; }
+        .close-btn:hover { background: #ff6b81; }
+
+        /* FULL GHAZAL MODAL */
+        .ghazal-modal-text { font-family: 'Noto Nastaliq Urdu', serif; font-size: 20px; line-height: 2.6; color: #111; margin: 20px 0; text-align: center; }
+        .share-btn-modal { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .share-btn-modal:hover { background: #2980b9; }
+        
+        /* PDF PREVIEW MODAL */
+        .pdf-modal-content { background: #f4f4f4; padding: 15px; border-radius: 10px; width: 95%; max-width: 800px; height: 90vh; display: flex; flex-direction: column; position: relative; }
+        .pdf-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2px solid #ddd; margin-bottom: 10px; }
+        .pdf-header h3 { color: var(--primary); font-family: 'Amiri', serif; font-size: 20px; margin: 0; }
+        #pdf-render-container { flex-grow: 1; width: 100%; overflow-y: auto; display: flex; flex-direction: column; align-items: center; background: #525659; padding: 20px; border-radius: 5px; position: relative; }
+        #pdf-render-container canvas { margin-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); max-width: 100%; height: auto; }
+        .pdf-lock-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 300px; background: linear-gradient(to bottom, rgba(82, 86, 89, 0) 0%, rgba(82, 86, 89, 1) 50%); display: none; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 30px; }
+        .lock-box { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width: 90%; max-width: 400px; }
+        .lock-box h4 { color: var(--primary); margin-bottom: 10px; font-size: 18px; }
+        .lock-box p { font-size: 14px; color: #555; margin-bottom: 15px; }
+        .whatsapp-buy-btn { background: var(--whatsapp); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; display: block; transition: 0.3s; }
+        .whatsapp-buy-btn:hover { background: #1ebe5d; }
+    </style>
 </head>
 <body>
-    <h1>Data Test</h1>
-    <div id="result" style="padding: 20px; background: #eee;">Loading...</div>
-    
-    <script>
-        // AAPKI SHEET KA PROXY LINK
-        const SHEET_ID = "2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO";
-        const PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?output=csv`)}`;
 
-        fetch(PROXY_URL)
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById('result').innerText = "DATA MIL GAYA:\n\n" + data.substring(0, 500) + "...";
-            })
-            .catch(err => {
-                document.getElementById('result').innerText = "ERROR: " + err.message;
+    <header>
+        <div class="logo">✒️ Poetry Mart</div>
+        <div class="nav-tabs">
+            <a class="active" onclick="switchTab('books', this)" id="tab-books-btn">Poetry & Books</a>
+            <a onclick="switchTab('shayar', this)" id="tab-shayar-btn">Shayar</a>
+            <a onclick="switchTab('products', this)" id="tab-products-btn">Products</a>
+        </div>
+        <div class="lang-switch">
+            <button onclick="changeLang('ur')" id="btn-ur" class="active">اردو</button>
+            <button onclick="changeLang('hi')" id="btn-hi">हिंदी</button>
+            <button onclick="changeLang('en')" id="btn-en">EN</button>
+        </div>
+    </header>
+
+    <div class="search-container" id="searchContainer">
+        <input type="text" id="searchInput" class="search-box" placeholder="Shayar ka naam likhein..." onkeyup="searchShayar()">
+    </div>
+
+    <div class="container">
+        <div id="loadingScreen" class="loading">Data load ho raha hai...</div>
+        
+        <div id="books-section" class="tab-section">
+            <h2 class="section-title" id="title-books">Featured Books</h2>
+            <div class="books-slider" id="books-slider"></div>
+
+            <h2 class="section-title" id="title-poetry">Poetry Collection</h2>
+            <div id="books-grid" class="grid"></div>
+        </div>
+
+        <div id="shayar-section" class="tab-section">
+            <h2 class="section-title" id="title-shayar">Shayar</h2>
+            <div id="shayar-grid" class="grid"></div>
+        </div>
+
+        <div id="products-section" class="tab-section">
+            <h2 class="section-title" id="title-products">Products</h2>
+            <div id="products-grid" class="product-grid"></div>
+        </div>
+    </div>
+
+    <!-- FULL GHAZAL MODAL -->
+    <div id="ghazalModal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal('ghazalModal')" class="close-btn">✕</button>
+            <h3 id="modalShayarName" style="color: var(--primary); font-family: 'Amiri', serif; font-size: 28px; margin-bottom: 20px;"></h3>
+            <div class="ghazal-modal-text" id="modalGhazalText"></div>
+            <button class="share-btn-modal" onclick="shareGhazal()">📤 Share Ghazal</button>
+        </div>
+    </div>
+
+    <!-- SHAYAR DETAIL MODAL -->
+    <div id="shayarDetailModal" class="modal">
+        <div class="modal-content">
+            <button onclick="closeModal('shayarDetailModal')" class="close-btn">✕</button>
+            <h3 id="shayarDetailName" style="color: var(--primary); font-family: 'Amiri', serif; font-size: 28px; margin-bottom: 20px;"></h3>
+            <div id="shayarDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- CUSTOM PDF VIEWER MODAL -->
+    <div id="pdfModal" class="modal">
+        <div class="pdf-modal-content">
+            <div class="pdf-header">
+                <h3 id="pdfBookTitle">Book Preview</h3>
+                <button onclick="closePdfModal()" class="close-btn" style="position:static;">✕ Close</button>
+            </div>
+            
+            <div id="pdf-render-container">
+                <div id="pdfLoader" style="color:white; margin-top:50px;">PDF Load ho rahi hai...</div>
+                <div id="pdfLockOverlay" class="pdf-lock-overlay">
+                    <div class="lock-box">
+                        <h4>Preview Khatam Ho Gaya!</h4>
+                        <p>Yeh sirf 5 pages ka preview tha. Puri kitab parhne ke liye neeche button dabayein.</p>
+                        <a href="#" id="whatsappBuyBtn" target="_blank" class="whatsapp-buy-btn">💬 Puri Kitab Khareedein</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content" style="max-width:400px;">
+            <button onclick="closeModal('paymentModal')" class="close-btn">✕</button>
+            <h3 style="color:var(--primary); margin-bottom:15px;">Kitab Khareedein</h3>
+            <p style="color:#666; margin-bottom:20px;">Aap <b><span id="modalBookTitle"></span></b> parhna chahte hain. Puri kitab (PDF) hasil karne ke liye WhatsApp par rabta karein.</p>
+            <a href="#" id="whatsappLink" target="_blank" class="whatsapp-buy-btn" style="margin-bottom:15px;">💬 WhatsApp par Rabta Karein</a>
+        </div>
+    </div>
+
+    <script>
+        // 🔴 YAHAN AAPKA NAYA WORKER URL LAGA HAI 🔴
+        const WORKER_URL = "https://late-flower-3366.mubashirsahib1234.workers.dev/"; 
+
+        const MY_WHATSAPP_NUMBER = "923226914318"; 
+        const PAGES_TO_SHOW = 5; 
+        
+        let allData = [];
+        let currentLang = 'ur';
+
+        const translations = {
+            ur: { tab1: "شاعری اور کتابیں", tab2: "شاعر", tab3: "مصنوعات", title1: "نمایاں کتابیں", title2: "شاعری کا مجموعہ", title3: "مصنوعات", buy: "خریدیں", read: "مزید پڑھیں →", search: "شاعر کا نام لکھیں..." },
+            hi: { tab1: "कविता और किताबें", tab2: "शायर", tab3: "उत्पाद", title1: "प्रमुख किताबें", title2: "कविता संग्रह", title3: "उत्पाद", buy: "खरीदें", read: "और पढ़ें →", search: "शायर का नाम लिखें..." },
+            en: { tab1: "Poetry & Books", tab2: "Shayar", tab3: "Products", title1: "Featured Books", title2: "Poetry Collection", title3: "Products", buy: "Buy Now", read: "Read More →", search: "Search Shayar..." }
+        };
+
+        function parseCSV(text) {
+            let p = '', r = [], inQuotes = false;
+            for (let i = 0; i < text.length; i++) {
+                let c = text[i];
+                if (c === '"') {
+                    if (inQuotes && text[i+1] === '"') { p += '"'; i++; }
+                    else { inQuotes = !inQuotes; }
+                } else if (c === ',' && !inQuotes) { r.push(p); p = ''; }
+                else if (c === '\n' && !inQuotes) { r.push(p); r.push('\n'); p = ''; }
+                else { p += c; }
+            }
+            if(p) r.push(p);
+            let rows = [], currentRow = [];
+            for(let item of r) {
+                if(item === '\n') {
+                    if(currentRow.length > 0) { rows.push(currentRow); currentRow = []; }
+                } else { currentRow.push(item.replace(/\r/g, '')); }
+            }
+            if(currentRow.length > 0) rows.push(currentRow);
+            return rows;
+        }
+
+        async function fetchData() {
+            try {
+                const response = await fetch(WORKER_URL);
+                const data = await response.text();
+                const rows = parseCSV(data);
+                
+                allData = [];
+                for(let i = 1; i < rows.length; i++) {
+                    let cols = rows[i];
+                    if(!cols || cols.length < 6 || !cols[5]) continue;
+
+                    let item = {
+                        title: cols[0] ? cols[0].trim() : '',
+                        price: cols[2] ? cols[2].trim() : '',
+                        img: cols[3] ? cols[3].trim() : '',
+                        pdf: cols[4] ? cols[4].trim() : '', 
+                        shayar: cols[5] ? cols[5].trim() : '',
+                        ghazal: cols[6] ? cols[6].trim() : '',
+                        prodName: cols[9] ? cols[9].trim() : '',
+                        prodLink: cols[10] ? cols[10].trim() : '',
+                        prodImg: cols[11] ? cols[11].trim() : ''
+                    };
+                    
+                    if(item.shayar && item.ghazal) allData.push(item);
+                }
+
+                renderBooksRow();
+                renderPoetryCards();
+                renderShayar();
+                renderProducts();
+                
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('books-section').classList.add('active');
+                changeLang('ur');
+                
+            } catch (error) {
+                document.getElementById('loadingScreen').innerText = "Data load nahi hua. Apna Worker URL check karein.";
+            }
+        }
+
+        function renderBooksRow() {
+            const slider = document.getElementById('books-slider');
+            slider.innerHTML = '';
+            const booksWithImages = allData.filter(item => item.title && item.img);
+            let uniqueTitles = new Set();
+
+            booksWithImages.forEach(item => {
+                if(!uniqueTitles.has(item.title)) {
+                    uniqueTitles.add(item.title);
+                    slider.innerHTML += `
+                        <div class="book-slide" onclick="openPdfViewer('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">
+                            <img src="${item.img}" onerror="this.src='https://via.placeholder.com/150x200?text=No+Image'">
+                            <div class="book-slide-title">${item.title}</div>
+                        </div>
+                    `;
+                }
             });
+        }
+
+        function renderPoetryCards() {
+            const grid = document.getElementById('books-grid');
+            grid.innerHTML = '';
+            
+            allData.forEach((item, index) => {
+                let bookPart = '';
+                if (item.title && item.img) {
+                    bookPart = `
+                        <div class="card-book-info">
+                            <img src="${item.img}" class="card-book-img" onerror="this.style.display='none'">
+                            <div class="card-book-details">
+                                <div class="card-book-title">${item.title}</div>
+                                <div class="card-book-price">Rs. ${item.price}</div>
+                                <div class="action-btns">
+                                    <button class="btn btn-primary" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">${translations[currentLang].buy}</button>
+                                    <button class="btn btn-outline" onclick="openPdfViewer('${item.title.replace(/'/g, "\\'")}', '${item.pdf}')">📖 Read</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                grid.innerHTML += `
+                    <div class="card">
+                        <div class="sher-content">
+                            <div class="shayar-name">${item.shayar}</div>
+                            <div class="ghazal-preview" id="ghazal-${index}">${item.ghazal.replace(/\n/g, '<br>')}</div>
+                            <span class="read-more-btn" onclick="openGhazalModal('${item.shayar.replace(/'/g, "\\'")}', \`${item.ghazal.replace(/`/g, '\\`')}\`)">${translations[currentLang].read}</span>
+                        </div>
+                        ${bookPart}
+                    </div>
+                `;
+            });
+        }
+
+        function renderShayar() {
+            const grid = document.getElementById('shayar-grid');
+            grid.innerHTML = '';
+            let uniqueShayars = new Set();
+
+            allData.forEach(item => {
+                if(item.shayar && !uniqueShayars.has(item.shayar)) {
+                    uniqueShayars.add(item.shayar);
+                    grid.innerHTML += `
+                        <div class="shayar-box" data-name="${item.shayar.toLowerCase()}" onclick="openShayarDetail('${item.shayar.replace(/'/g, "\\'")}')">
+                            <h3>${item.shayar}</h3>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function searchShayar() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.shayar-box').forEach(box => {
+                const name = box.getAttribute('data-name');
+                box.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            allData.forEach(item => {
+                if(item.prodName && item.prodImg) {
+                    grid.innerHTML += `
+                        <div class="product-card">
+                            <img src="${item.prodImg}" class="product-img" onerror="this.style.display='none'">
+                            <div class="product-title">${item.prodName}</div>
+                            <a href="${item.prodLink}" target="_blank" class="btn btn-primary" style="width:100%;">${translations[currentLang].buy}</a>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function openGhazalModal(shayar, ghazal) {
+            document.getElementById('modalShayarName').innerText = shayar;
+            document.getElementById('modalGhazalText').innerHTML = ghazal.replace(/\n/g, '<br>');
+            document.getElementById('ghazalModal').style.display = 'flex';
+        }
+
+        function shareGhazal() {
+            const text = document.getElementById('modalGhazalText').innerText;
+            if (navigator.share) {
+                navigator.share({ title: 'Poetry Mart', text: text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(text);
+                alert("Ghazal copied to clipboard!");
+            }
+        }
+
+        function openShayarDetail(shayarName) {
+            document.getElementById('shayarDetailName').innerText = shayarName;
+            const details = allData.filter(item => item.shayar === shayarName);
+            let contentHTML = '';
+
+            details.forEach(item => {
+                contentHTML += `
+                    <div class="ghazal-modal-text" style="margin-bottom:30px;">${item.ghazal.replace(/\n/g, '<br>')}</div>
+                `;
+                if(item.title && item.img) {
+                    contentHTML += `
+                        <div style="display:flex; align-items:center; justify-content:center; gap:15px; background:#fafafa; padding:15px; border-radius:10px; margin-top:20px;">
+                            <img src="${item.img}" style="width:50px; height:75px; object-fit:cover; border-radius:5px;">
+                            <div style="text-align:left;">
+                                <div style="font-weight:bold; color:var(--text-dark);">${item.title}</div>
+                                <div style="color:var(--primary); font-weight:bold;">Rs. ${item.price}</div>
+                                <button class="btn btn-primary" style="margin-top:5px;" onclick="openPaymentModal('${item.title.replace(/'/g, "\\'")}')">${translations[currentLang].buy}</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('shayarDetailContent').innerHTML = contentHTML;
+            document.getElementById('shayarDetailModal').style.display = 'flex';
+        }
+
+        async function openPdfViewer(title, pdfLink) {
+            if(!pdfLink || pdfLink === '') {
+                alert("Is kitab ki PDF link mojood nahi hai.");
+                return;
+            }
+
+            document.getElementById('pdfBookTitle').innerText = title;
+            document.getElementById('pdfModal').style.display = 'flex';
+            
+            const container = document.getElementById('pdf-render-container');
+            const lockOverlay = document.getElementById('pdfLockOverlay');
+            const loader = document.getElementById('pdfLoader');
+            
+            Array.from(container.children).forEach(child => {
+                if(child.id !== 'pdfLoader' && child.id !== 'pdfLockOverlay') child.remove();
+            });
+            
+            loader.style.display = 'block';
+            lockOverlay.style.display = 'none';
+
+            const message = `Assalam o Alaikum, mujhe "${title}" ki puri PDF khareedni hai.`;
+            document.getElementById('whatsappBuyBtn').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+            try {
+                let directLink = pdfLink;
+                if(pdfLink.includes('drive.google.com')) {
+                    let match = pdfLink.match(/[-\w]{25,}/);
+                    if(match) directLink = `https://drive.google.com/uc?export=download&id=${match[0]}`;
+                }
+
+                const loadingTask = pdfjsLib.getDocument(directLink);
+                const pdf = await loadingTask.promise;
+                loader.style.display = 'none';
+
+                const totalPages = pdf.numPages;
+                const pagesToRender = Math.min(totalPages, PAGES_TO_SHOW);
+
+                for (let pageNum = 1; pageNum <= pagesToRender; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    
+                    container.appendChild(canvas);
+
+                    const renderContext = { canvasContext: context, viewport: viewport };
+                    await page.render(renderContext).promise;
+                }
+
+                container.appendChild(lockOverlay);
+                lockOverlay.style.display = 'flex';
+                setTimeout(() => { container.scrollTop = container.scrollHeight; }, 500);
+
+            } catch (error) {
+                loader.innerText = "PDF load nahi ho saki. Link check karein.";
+                console.error(error);
+            }
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdfModal').style.display = 'none';
+            document.getElementById('pdf-render-container').innerHTML = '<div id="pdfLoader">PDF Load ho rahi hai...</div><div id="pdfLockOverlay" class="pdf-lock-overlay"></div>';
+        }
+
+        function openPaymentModal(bookTitle) {
+            document.getElementById('modalBookTitle').innerText = bookTitle;
+            const message = `Assalam o Alaikum, mujhe "${bookTitle}" ki puri PDF khareedni hai.`;
+            document.getElementById('whatsappLink').href = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function switchTab(tabName, element) {
+            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName + '-section').classList.add('active');
+            document.querySelectorAll('.nav-tabs a').forEach(a => a.classList.remove('active'));
+            element.classList.add('active');
+
+            const searchContainer = document.getElementById('searchContainer');
+            searchContainer.style.display = (tabName === 'shayar') ? 'block' : 'none';
+        }
+
+        function changeLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            
+            document.getElementById('tab-books-btn').innerText = translations[lang].tab1;
+            document.getElementById('tab-shayar-btn').innerText = translations[lang].tab2;
+            document.getElementById('tab-products-btn').innerText = translations[lang].tab3;
+            document.getElementById('title-books').innerText = translations[lang].title1;
+            document.getElementById('title-poetry').innerText = translations[lang].title2;
+            document.getElementById('title-shayar').innerText = translations[lang].tab2;
+            document.getElementById('title-products').innerText = translations[lang].title3;
+            document.getElementById('searchInput').placeholder = translations[lang].search;
+            
+            renderPoetryCards();
+            renderProducts();
+        }
+
+        window.onload = fetchData;
     </script>
 </body>
 </html>

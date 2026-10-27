@@ -215,9 +215,12 @@
     </div>
 
     <script>
-        // AAPKA ASAL CSV LINK (Jo aapke pubhtml link se banaya gaya hai)
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO/pub?output=csv"; 
+        // ASAL SHEET LINK
+        const SHEET_ID = "2PACX-1vSTF6i1qxL8s2aZri_TdSvZUjXIVscTAqLn2GEOKNIjPjejP75dMyUyB1rg1GCD-vLpncDkfwC7_LMO";
         
+        // PROXY LINK (Google ki security bypass karne ke liye)
+        const SHEET_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?output=csv`)}`;
+
         const MY_WHATSAPP_NUMBER = "923226914318"; 
         const PAGES_TO_SHOW = 5; 
         
@@ -288,7 +291,7 @@
                 changeLang('ur');
                 
             } catch (error) {
-                document.getElementById('loadingScreen').innerText = "Data load nahi hua. Sheet check karein.";
+                document.getElementById('loadingScreen').innerText = "Data load nahi hua. Internet check karein.";
             }
         }
 
@@ -525,5 +528,3 @@
             document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-' + lang).classList.add('active');
             
-            document.getElementById('tab-books-btn').innerText = translations[lang].tab1;
-            document.getElementById('tab-shayar-btn').innerText = translations[lang
